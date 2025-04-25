@@ -1,0 +1,74 @@
+USER STORIES ES
+
+Estructura a respetar 
+
+As a <Role>,
+I want <Goal>
+so that <Benefit>.
+
+Acceptance criteria:
+(Conditions of Satisfaction)
+...
+
+Como un <tipo de usuario>,
+Quiero <hacer algo>
+así <sucede algo>.
+
+1- Como Usuario
+   Quiero ingresar dinero a mi cuenta
+   Así poder tener dinero en la cuenta
+   Criterios de aceptación:
+   1- Un Admin debe aceptar nuestro ingreso de dinero.
+   2- La cifra del dinero debe ser mayor a cero.  
+
+2- Como un Admin
+   Quiero aceptar o rechazar peticioness de ingreso de dinero 
+   Asi poder tener dinero en la cuenta 
+   Criterios de aceptación:
+   1- Un Usuario debe enviar una peticion.
+
+
+3- Como <usuario>
+   Quiero <realizar una transferencia>
+   Así <puedo mover mi saldo cuentas propias o ajenas>
+   Criterios de aceptación:
+   1- La cifra a transferir debe ser mayor a cero.
+   2- La cuenta receptora debe ser distinta a la emisora. NECESARIO??
+
+4- Como <usuario>
+   Quiero <realizar un pago de servicio>
+   Así <elimino una deuda con el prestador del servicio>
+   Criterios de aceptación:
+   1- Se abona la deuda por completo.
+   2- Elige un servicio del listado / Tiene disponible todos los proveedores de servicio del país.
+
+5- Como <usuario>
+   Quiero <realizar una recarga de servicio de transporte/telefonía>
+   Así <acredito saldo para poder acceder a los servicios que provee el prestador> ??????
+   Criterios de aceptación:
+   1- La cifra del dinero debe ser mayor a cero.
+   2- Elige un servicio del listado / Tiene disponible todos los proveedores de servicio del país. 
+
+6- Como <usuario>
+   Quiero <acceder a mi historial de movimientos>   
+   Así <conocer tanto las entradas y salidas de saldo en mi cuenta>
+   Criterios de aceptación:
+   Ninguno
+
+7- Como <usuario>
+   Quiero <establecer un objetivo de ahorro>
+   Así <tener en cuenta mi progreso para cumplirlo>
+   Criterios de aceptación:
+   1- El monto a ahorrar debe ser mayor a cero. 
+
+8- Como <usuario>
+   Quiero <realizar un canjeo de puntos>
+   Así <acceder a las promociones y/o descuentos del sist. de puntos>
+   Criterios de aceptación:
+   1- Debe contar con una cantidad igual o mayor de puntos al costo del beneficio.
+
+9- Como <usuario>
+   Quiero <conocer el estado de un movimiento>
+   Así <saber si se ha completado o no>
+   Criterios de aceptación:
+   Ninguno
