@@ -1,0 +1,19 @@
+<head>
+    <title>Register</title>
+</head>
+<body>
+    <h1>REGISTRARSE</h1>
+    <form action="/register" method="post">
+        <label>DNI: <input type="text" name="dni" required></label><br>
+        <label>Nombre: <input type="text" name="first_name" required></label><br>
+        <label>Apellido: <input type="text" name="last_name" required></label><br>
+        <label>Fecha de Nacimiento: <input type="date" name="birth_date" required></label><br>
+        <label>Teléfono: <input type="tel" name="phone" required></label><br>
+        <label>Email: <input type="email" name="email" required></label><br>
+        <label>Nombre de Usuario: <input type="text" name="username" required></label><br>
+        <label>Contraseña: <input type="password" name="password" required></label><br>
+        <button type="submit">Enviar</button>
+    </form>
+    <p>¿Ya tenes cuenta?</p>
+    <a href = "/">Inicia Sesion</a>
+</body>
