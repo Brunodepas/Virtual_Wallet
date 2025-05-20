@@ -24,8 +24,21 @@ class App < Sinatra::Application
     end
     
     get '/' do
-        "KickStart"
+        erb :login
     end
+
+    post '/' do
+      username = params[:username]
+      password = params[:password]
+      @user = User.find_by(username: username, password: password)
+
+      if @user
+        erb :home
+      else
+        "Usuario no encontrado"
+      end
+    end
+
     
     get '/register' do
         erb :register
