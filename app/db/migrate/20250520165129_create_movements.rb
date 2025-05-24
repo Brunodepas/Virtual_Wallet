@@ -3,7 +3,7 @@ class CreateMovements < ActiveRecord::Migration[8.0]
     create_table :movements do |t|
       t.float :amount
       t.date :date
-      t.string :type
+      t.string :movement_type
       t.string :status
       t.string :reason
       t.references :origin, foreign_key:{to_table: :accounts}
