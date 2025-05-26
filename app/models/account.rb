@@ -4,6 +4,7 @@ class Account < ActiveRecord::Base
     has_many :origin, class_name:'Movement', foreign_key: 'origin_id'
     has_many :destination, class_name:'Movement', foreign_key: 'destination_id'
     has_many :history, class_name:'Movement', foreign_key: 'history_id'
+    has_many :savings
 
     #Validations
     VALID_COINS = ['Peso', 'Dólar']
