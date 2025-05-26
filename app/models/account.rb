@@ -15,4 +15,6 @@ class Account < ActiveRecord::Base
     validates :coin, inclusion: { in: VALID_COINS }
     validates :status, inclusion: { in: VALID_STATUS }
     validates :level, inclusion: { in: VALID_LEVEL }
+    validates :alias, presence: true, uniqueness: true
+    validates :cvu, presence: true, uniqueness: true
 end

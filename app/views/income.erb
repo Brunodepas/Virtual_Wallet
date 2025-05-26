@@ -3,6 +3,12 @@
 <head>
 <body>
     <h1>Indique la cantidad de dinero a ingresar</h1>
+    <% if @error %>
+        <p style="color: red;"><%= @error %></p>
+    <% end %>
+    <% if @message %>
+        <p style="color: green;"><%= @message %></p>
+    <% end %>
     <form action="/income" method="post">
         <input type= "number" name="amount" required>
         <br>

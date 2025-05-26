@@ -3,6 +3,9 @@
 </head>
 <body>
     <h1>REGISTRARSE</h1>
+    <% if @error %>
+        <p style="color: red;"><%= @error %></p>
+    <% end %>
     <form action="/register" method="post">
         <label>DNI: <input type="text" name="dni" required></label><br>
         <label>Nombre: <input type="text" name="first_name" required></label><br>

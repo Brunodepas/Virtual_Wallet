@@ -1,9 +1,11 @@
-
 <head>
     <title>Log in</title>
 <head>
 <body>
     <h1>Indique su Usuario y Contraseña</h1>
+    <% if @error %>
+        <p style="color: red;"><%= @error %></p>
+    <% end %>
     <form action="/" method="post">
         <label> Usuario: <input type= "text" name="username" required></label>
         <br>
