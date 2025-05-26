@@ -1,0 +1,20 @@
+<head>
+    <title>addtosaving</title>
+<head>
+
+<body>
+    <h1>Agregar dinero a "<%= @saving.description %>"</h1>
+
+    <p>Meta: $<%= @saving.goal_amount %></p>
+    <p>Actual: $<%= @saving.current_amount %></p>
+    <p>Saldo en cuenta: $<%= @account.balance %></p>
+    
+    <form action="/confirm_add_to_saving/<%= @saving.id %>" method="post">
+        <label>Monto a agregar:</label>
+        <input type="number" name="amount" required>
+        <button type="submit">Confirmar</button>
+    </form>
+
+    <a href="/my_saving">Volver a ahorros</a>
+
+<body>

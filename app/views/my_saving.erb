@@ -1,0 +1,27 @@
+<head>
+    <title>All savings</title>
+</head>
+<body>
+    <h1>MIS AHORROS</h1>
+    
+    <button><a href="/new_saving">Crear nuevo ahorro</a></button>
+    <br>
+    <br>
+
+    <% if @savings.any? %>
+  
+    <% @savings.each do |saving| %>
+      
+        <%= saving.description %>
+        <br>
+        Monto actual: $<%= saving.current_amount %><br>
+        Meta: $<%= saving.goal_amount %>
+        <a href="/add_to_saving/<%= saving.id %>"><button>Agregar dinero</button></a>
+        <br>
+        <br>
+    <% end %>
+  
+<% else %>
+  <p>No tenés ahorros todavía.</p>
+<% end %>
+    

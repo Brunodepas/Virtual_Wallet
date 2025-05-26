@@ -128,9 +128,105 @@ class App < Sinatra::Application
     end
 
     # get '/activar' do
-    #     Movement.where(movement_type: "Ingreso", status: "Pendiente").find_each do |movement|
-    #         movement.update(status: 'Exitosa')
+    #    Movement.where(movement_type: "Ingreso", status: "Pendiente").find_each do |movement|
+    #        movement.update(status: 'Exitosa')
     #     end
     # end
+
+     get '/new_saving' do
+        erb :new_saving
+    end
+    
+    post '/new_saving' do
+        if current_user
+        account = current_user.accounts.first
+        
+        saving = Saving.new(
+            description: params[:description],
+            goal_amount: params[:goal_amount].to_f,
+            account: account
+
+        )
+    if saving.save
+      "Ahorro creado correctamente"
+    else
+      "Error: no se pudo crear el ahorro"
+    end
+    else
+    redirect '/'
+
+    end
+end
+
+get '/my_saving' do
+  if current_user
+    account = current_user.accounts.first
+    @savings = account.savings  
+    erb :my_saving  
+  else
+    redirect '/'
+  end
+end
+
+get '/add_to_saving/:id' do
+  if current_user
+    @saving = Saving.find(params[:id])
+    if @saving.account.user == current_user
+      @account = @saving.account
+      erb :add_to_saving
+    else
+      "No tenés permiso para acceder a este ahorro."
+    end
+  else
+    redirect '/'
+  end
+end
+
+get '/add_to_saving/:id' do
+  if current_user
+    @saving = Saving.find(params[:id])
+    if @saving.account.user == current_user
+      @account = @saving.account
+      erb :add_to_saving
+    else
+      "No tenés permiso para acceder a este ahorro."
+    end
+  else
+    redirect '/'
+  end
+end
+
+post '/confirm_add_to_saving/:id' do
+  if current_user
+    saving = Saving.find(params[:id])
+    account = saving.account
+
+    if account.user == current_user
+      amount = params[:amount].to_f
+
+      if amount <= 0
+        "El monto debe ser mayor a cero."
+      elsif amount > account.balance
+        "No tenés suficiente saldo en la cuenta."
+      elsif amount > saving.goal_amount
+        "Superarías la meta del ahorro."
+      else
+        # Restar a la cuenta y sumar al ahorro
+        account.balance -= amount
+        saving.current_amount += amount
+
+        if saving.save && account.save
+          redirect '/my_saving'
+        else
+          "Error al guardar los cambios."
+        end
+      end
+    else
+      "No tenés permiso para modificar este ahorro."
+    end
+  else
+    redirect '/'
+  end
+end
 
 end
