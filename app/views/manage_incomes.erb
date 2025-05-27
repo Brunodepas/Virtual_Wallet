@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Gestionar Ingresos Pendientes</title>
+</head>
+<body>
+  <h1>Ingresos Pendientes</h1>
+
+    <% if @notice %>
+        <p style="color: green;"><%= @notice %></p>
+    <% end %>
+
+    <% if @error %>
+        <p style="color: red;"><%= @error %></p>
+    <% end %>
+
+    <% if @movements.empty? %>
+        <p>No hay ingresos pendientes</p>
+    <% else %>
+        <table border="1" cellpadding="5" cellspacing="0">
+        <thead>
+            <tr>
+            <th>ID</th>
+            <th>Monto</th>
+            <th>Fecha</th>
+            <th>Cuenta de Origen</th>
+            <th>Estado</th>
+            <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% @movements.each do |movement| %>
+            <tr>
+                <td><%= movement.id %></td>
+                <td><%= sprintf('%.2f', movement.amount) %></td>
+                <td><%= movement.date.strftime("%d/%m/%Y %H:%M") %></td>
+                <td><%= movement.origin&.alias || "Sin cuenta" %></td>
+                <td><%= movement.status %></td>
+                <td>
+                    <form action="/manage_incomes/<%= movement.id %>/accept" method="post" style="display:inline;" onsubmit="this.querySelector('button').disabled = true;">
+                        <button type="submit">Aceptar</button>
+                    </form>
+                    <form action="/manage_incomes/<%= movement.id %>/reject" method="post" style="display:inline;">
+                        <button type="submit">Rechazar</button>
+                    </form>
+                </td>
+            </tr>
+            <% end %>
+        </tbody>
+        </table>
+    <% end %>
+
+    <br>
+    <a href="/home">Volver al inicio</a>
+    </body>
+    </html>
+
+<!--Esta view asume que @movements es un arreglo con los movimientos de tipo "Ingreso" y estado "Pendiente"-->
