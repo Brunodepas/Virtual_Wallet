@@ -268,7 +268,7 @@ class App < Sinatra::Application
           "El monto debe ser mayor a cero."
         elsif amount > account.balance
           "No tenés suficiente saldo en la cuenta."
-        elsif amount > saving.goal_amount
+        elsif saving.current_amount + amount > saving.goal_amount
           "Superarías la meta del ahorro."
         else
           # Restar a la cuenta y sumar al ahorro
