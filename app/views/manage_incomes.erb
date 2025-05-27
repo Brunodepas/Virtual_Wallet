@@ -37,7 +37,7 @@
                 <td><%= movement.origin&.alias || "Sin cuenta" %></td>
                 <td><%= movement.status %></td>
                 <td>
-                    <form action="/manage_incomes/<%= movement.id %>/accept" method="post" style="display:inline;">
+                    <form action="/manage_incomes/<%= movement.id %>/accept" method="post" style="display:inline;" onsubmit="this.querySelector('button').disabled = true;">
                         <button type="submit">Aceptar</button>
                     </form>
                     <form action="/manage_incomes/<%= movement.id %>/reject" method="post" style="display:inline;">
@@ -55,4 +55,4 @@
     </body>
     </html>
 
-#Esta view asume que @movements es un arreglo con los movimientos de tipo "Ingreso" y estado "Pendiente"
+<!--Esta view asume que @movements es un arreglo con los movimientos de tipo "Ingreso" y estado "Pendiente"-->

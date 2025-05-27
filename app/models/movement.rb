@@ -7,7 +7,7 @@ class Movement < ActiveRecord::Base
 
   #Validations
   VALID_MOVEMENTS = ['Transferencia', 'Ingreso']
-  VALID_STATUS = ['Pendiente', 'Fallido', 'Exitosa']
+  VALID_STATUS = ['Pendiente', 'Fallido', 'Exitosa','Rechazada']
 
   #Valores válidos para esos atributos
   validates :movement_type, inclusion: { in: VALID_MOVEMENTS }

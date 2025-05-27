@@ -82,14 +82,14 @@ class App < Sinatra::Application
           phone: params[:phone],
           email: params[:email],
         )
-        user = User.create!(
+          user = User.create!(
           username: params[:username],
           password: params[:password],
-          admin_check: false,
+          admin_check: params[:is_admin] == "on",
           person: person
         )
-        ts = Time.current.strftime('%Y%m%d%H%M%S%6N')
-        Account.create!(
+          ts = Time.current.strftime('%Y%m%d%H%M%S%6N')
+          Account.create!(
           alias: params[:first_name] + params[:dni] + "P",
           cvu: ts + params[:dni],
           balance: 0,
@@ -109,8 +109,10 @@ class App < Sinatra::Application
   end
 
   get '/income' do
+    @message = session.delete(:message)
     erb :income
   end
+
 
   post '/income' do
     if current_user
@@ -127,11 +129,11 @@ class App < Sinatra::Application
         user: nil
       )
       if movement.save
-        @message = "Ingreso generado correctamente, espere a ser autorizado"
-        erb :income
+        session[:message] = "Ingreso generado correctamente, espere a ser autorizado"
+        redirect '/income'
       else
         @error = "Error: no se pudo procesar el ingreso"
-        erb :income
+      erb :income
       end
     else
       redirect '/'
@@ -143,46 +145,53 @@ class App < Sinatra::Application
     halt(403, "No autorizado") unless current_user&.admin_check
 
     @notice = session.delete(:notice)
-    @notice = session.delete(:error)
+    @error = session.delete(:error)
 
-    @movements = Movement.where(movement_type: "Ingreso", status: "Pendiente").order(date: desc)
+    @movements = Movement.where(movement_type: "Ingreso", status: "Pendiente").order(date: :desc)
     @notice = session.delete(:notice)
 
     erb :manage_incomes
   end
 
-  post 'manage_incomes/:id/accept' do
-    # Verifico que el usuario sea admin
+  post '/manage_incomes/:id/accept' do
+    
     halt(403, "No autorizado") unless current_user&.admin_check
 
-    movement = Movement.find(params[:id])
-    if movement && movement.status == "Pendiente" && movement.movement_type == "Ingreso"
-      movement.update(status: "Exitosa")
-      account = movement.origin
-      account.balance += movement.amount
-      account.save!
+    Movement.transaction do
+      movement = Movement.lock.find(params[:id]) # bloqueo fila para evitar race conditions
+
+      if movement.status == "Pendiente" && movement.movement_type == "Ingreso"
+        movement.update!(status: "Exitosa")
+        session[:notice] = "Ingreso aprobado. Balance actualizado."
+      else
+        session[:error] = "El ingreso ya fue procesado."
+      end
     end
 
-    #Muestro un mensaje que determina que la operacion fue exitosa
-    session[:notice] = "Ingreso aprobado. Balance actualizado. Muchas gracias por su paciencia."
-  
     redirect '/manage_incomes'
+
   end
 
-  post 'manage_incomes/:id/reject' do
-    # Verifico que el usuario sea admin
+  post '/manage_incomes/:id/reject' do
+    puts "Intentando rechazar movimiento #{params[:id]}"
     halt(403, "No autorizado") unless current_user&.admin_check
 
     movement = Movement.find(params[:id])
+    puts "Movimiento encontrado: status=#{movement.status.inspect}, tipo=#{movement.movement_type.inspect}"
+
     if movement && movement.status == "Pendiente" && movement.movement_type == "Ingreso"
-      movement.update(status: "Rechazada")
-      session[:notice] = "Ingreso rechazado"
+      if movement.update(status: "Rechazada")
+        session[:notice] = "Ingreso rechazado"
+      else
+        session[:error] = "No se pudo rechazar el ingreso (update falló)"
+      end
     else
-      session[:error] = "No se pudo rechazar el ingreso"
+      session[:error] = "No se pudo rechazar el ingreso (condición no cumplida)"
     end
-  
+
     redirect '/manage_incomes'
   end
+
 
   get '/new_saving' do
     erb :new_saving
