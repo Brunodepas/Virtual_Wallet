@@ -3,6 +3,8 @@ require 'sinatra/base'
 require 'sinatra/reloader' if Sinatra::Base.environment == :development
 require 'logger'
 require 'sinatra/activerecord'
+require 'securerandom'
+require 'pony'
 
 #uso esto para cargar todos los modelos
 Dir[File.join(__dir__, 'models', '*.rb')].each { |file| require file }
@@ -284,6 +286,72 @@ class App < Sinatra::Application
       end
     else
       redirect '/'
+    end
+  end
+
+  get '/forgot' do
+    erb :forgot, layout: false
+  end
+
+  post '/forgot' do
+    email = params[:email]
+    user = User.joins(:person).find_by(people: {email: email})
+
+    if user
+      codigo = rand(100000..999999).to_s
+      session[:codigo] = codigo
+      session[:user_id] = user.id
+      begin
+        Pony.mail(
+          to: email,
+          subject: "Código de recuperación",
+          body: "Tu código de recuperación es: #{codigo}",
+          via: :smtp,
+          via_options: {
+            address: 'smtp.gmail.com',
+            port: '587',
+            enable_starttls_auto: true,
+            user_name: 'winkfinanzas@gmail.com',
+            password: 'ueqn loyv ytdr civd',
+            authentication: :plain,
+            domain: "localhost.localdomain"
+          }
+        )
+        redirect '/verify_code'
+      rescue => e
+        logger.error "Error al enviar correo: #{e.message}"
+        @error = "No se pudo enviar el correo. Intente más tarde."
+        erb :forgot, layout: false
+      end
+    end
+  end
+
+  get '/verify_code' do
+    erb :verify_code, layout: false
+  end
+
+  post '/verify_code' do
+    if params[:code] == session[:codigo]
+      redirect '/reset_password'
+    else
+      @error = "Codigo incorrecto"
+      redirect '/verify_code'
+    end
+  end
+
+  get '/reset_password' do
+    erb :reset_password, layout: false
+  end
+
+  post '/reset_password' do
+    user = User.find_by(id: session[:user_id])
+    if user
+      user.update(password: params[:password])
+      session.clear
+      redirect '/'
+    else
+      @error = "Hubo un problema"
+      redirect '/forgot'
     end
   end
 

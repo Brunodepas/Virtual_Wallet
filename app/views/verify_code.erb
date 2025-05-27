@@ -1,0 +1,9 @@
+<h2>Verificar código</h2>
+<form action="/verify_code" method="post">
+  <% if @error %>
+    <p style="color: red;"><%= @error %></p>
+  <% end %>
+  <label for="code">Código recibido:</label>
+  <input type="text" name="code" required>
+  <button type="submit">Verificar</button>
+</form>
