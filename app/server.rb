@@ -138,11 +138,50 @@ class App < Sinatra::Application
     end
   end
 
-  get '/activar' do
-    Movement.where(movement_type: "Ingreso", status: "Pendiente").find_each do |movement|
-      movement.update(status: 'Exitosa')
+  get '/manage_incomes' do
+    # Verifico que el usuario sea admin
+    halt(403, "No autorizado") unless current_user&.admin_check
+
+    @notice = session.delete(:notice)
+    @notice = session.delete(:error)
+
+    @movements = Movement.where(movement_type: "Ingreso", status: "Pendiente").order(date: desc)
+    @notice = session.delete(:notice)
+
+    erb :manage_incomes
+  end
+
+  post 'manage_incomes/:id/accept' do
+    # Verifico que el usuario sea admin
+    halt(403, "No autorizado") unless current_user&.admin_check
+
+    movement = Movement.find(params[:id])
+    if movement && movement.status == "Pendiente" && movement.movement_type == "Ingreso"
+      movement.update(status: "Exitosa")
+      account = movement.origin
+      account.balance += movement.amount
+      account.save!
     end
-    redirect '/home'
+
+    #Muestro un mensaje que determina que la operacion fue exitosa
+    session[:notice] = "Ingreso aprobado. Balance actualizado. Muchas gracias por su paciencia."
+  
+    redirect '/manage_incomes'
+  end
+
+  post 'manage_incomes/:id/reject' do
+    # Verifico que el usuario sea admin
+    halt(403, "No autorizado") unless current_user&.admin_check
+
+    movement = Movement.find(params[:id])
+    if movement && movement.status == "Pendiente" && movement.movement_type == "Ingreso"
+      movement.update(status: "Rechazada")
+      session[:notice] = "Ingreso rechazado"
+    else
+      session[:error] = "No se pudo rechazar el ingreso"
+    end
+  
+    redirect '/manage_incomes'
   end
 
   get '/new_saving' do
