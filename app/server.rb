@@ -202,8 +202,9 @@ class App < Sinatra::Application
   end
 
   post '/transfer' do
-    edirect '/' unless logged_in?
-    @accounts = current_user.accounts  
+    redirect '/' unless logged_in?
+    @accounts = current_user.accounts 
+    @account = @accounts.first 
 
     #Obtenés las cuentas por ID que viene del form
     origin = Account.find_by(id: params[:origin_id])

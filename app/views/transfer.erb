@@ -10,6 +10,7 @@
 <p><strong>Balance:</strong> $<%= @account.balance %></p>
 
 <form action="/transfer" method="post">
+  <input type="hidden" name="origin_id" value="<%= @account.id %>">
   <div>
     <label for="destination">CVU o Alias del destinatario:</label>
     <input type="text" name="destination" id="destination" required>
