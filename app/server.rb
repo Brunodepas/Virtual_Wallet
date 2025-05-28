@@ -231,7 +231,7 @@ class App < Sinatra::Application
     begin
       Movement.transfer(origin: origin, destination: destination, amount: amount, reason: reason)
       redirect '/home'
-      rescue => e
+    rescue => e
       @error = "Error en la transferencia: #{e.message}"
       erb :transfer
     end
