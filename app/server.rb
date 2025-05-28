@@ -207,7 +207,7 @@ class App < Sinatra::Application
 
     #Obtenés las cuentas por ID que viene del form
     origin = Account.find_by(id: params[:origin_id])
-    destination = Account.find_by(id: params[:destination_id])
+     destination = Account.find_by(alias: params[:destination]) || Account.find_by(cvu: params[:destination])
     amount = params[:amount].to_f
     reason = params[:reason]
 
