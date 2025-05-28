@@ -22,4 +22,48 @@ class Movement < ActiveRecord::Base
       origin.update(balance: origin.balance + amount)
     end
   end
+
+  def self.transfer(origin: ,destination: , amount:, reason:) 
+    raise ArgumentError, "Cuenta origen y destino deben ser distintas" if origin.id == destination.id
+    raise ArgumentError, "Cantidad a transferir no válida" if (amount <= 0 || amount >= origin.balance)
+    #raise ArgumentError, "Cuentas con distintos tipos de moneda" if (origin.coin != destination.coin) 
+    #raise ArgumentError, "Cuenta emisora inactiva" if (origin.status == 'Inactivo')
+    #raise ArgumentError, "Cuenta receptora inactiva" if (destination.status == 'Inactivo')
+    #Si se agregan estos 3 errores, modificar historia de usuario asociada.
+
+    ActiveRecord::Base.transaction do
+      #Modifico balance de cuentas implicadas
+      # Modificar balances
+      origin.update!(balance: origin.balance - amount)
+      destination.update!(balance: destination.balance + amount)
+
+      #Registro la transferencia exitosa
+      Movement.create!(
+        amount: amount,
+        date: Time.current,
+        movement_type: 'Transferencia',
+        status: 'Exitosa',
+        reason: reason,
+        origin: origin,
+        destination: destination,
+        history: origin,
+        user: origin.user,
+      )
+    end
+
+    rescue => error
+      #Registro la transferencia fallida
+      Movement.create!(
+          amount: amount,
+          date: Time.current,
+          movement_type: 'Transferencia',
+          status: 'Fallido',
+          reason: error.message,
+          origin: origin,
+          destination: destination,
+          history: origin,
+          user: origin.user,
+        )
+        raise
+      end 
 end
