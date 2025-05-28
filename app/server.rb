@@ -194,6 +194,48 @@ class App < Sinatra::Application
     redirect '/manage_incomes'
   end
 
+  get '/transfer' do
+    redirect '/' unless logged_in?
+    @accounts = current_user.accounts
+    @account = @accounts.first #Tomo la primera cuenta del usuario, modificar para dar listado en la view
+    erb :transfer
+  end
+
+  post '/transfer' do
+    redirect '/' unless logged_in?
+    @accounts = current_user.accounts 
+    @account = @accounts.first 
+
+    #Obtenés las cuentas por ID que viene del form
+    origin = Account.find_by(id: params[:origin_id])
+     destination = Account.find_by(alias: params[:destination]) || Account.find_by(cvu: params[:destination])
+    amount = params[:amount].to_f
+    reason = params[:reason]
+
+    # Verificación de seguridad: la cuenta origen debe pertenecer al usuario logueado
+    unless origin && current_user.accounts.include?(origin)
+      @error = "Cuenta de origen inválida o no autorizada."
+      return erb :transfer
+    end
+
+    if destination.nil?
+      @error = "Cuenta de destino no encontrada."
+      return erb :transfer
+    end
+
+    if amount <= 0
+      @error = "El monto debe ser mayor a cero."
+      return erb :transfer
+    end
+
+    begin
+      Movement.transfer(origin: origin, destination: destination, amount: amount, reason: reason)
+      redirect '/home'
+      rescue => e
+      @error = "Error en la transferencia: #{e.message}"
+      erb :transfer
+    end
+  end
 
   get '/new_saving' do
     erb :new_saving

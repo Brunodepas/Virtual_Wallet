@@ -1,0 +1,32 @@
+      <h2>Transferencia</h2>
+
+<!-- Mostrar errores si existen -->
+<% if @error %>
+  <p style="color: red;"><%= @error %></p>
+<% end %>
+
+<!-- Información de la cuenta emisora -->
+<p><strong>Cuenta actual:</strong> <%= @account.alias %> (CVU: <%= @account.cvu %>)</p>
+<p><strong>Balance:</strong> $<%= @account.balance %></p>
+
+<form action="/transfer" method="post">
+  <input type="hidden" name="origin_id" value="<%= @account.id %>">
+  <div>
+    <label for="destination">CVU o Alias del destinatario:</label>
+    <input type="text" name="destination" id="destination" required>
+  </div>
+
+  <div>
+    <label for="amount">Monto a transferir:</label>
+    <input type="number" name="amount" id="amount" step="0.01" min="0" required>
+  </div>
+
+  <div>
+    <label for="reason">Motivo de la transferencia:</label>
+    <input type="text" name="reason" id="reason">
+  </div>
+
+  <div>
+    <button type="submit">Enviar Transferencia</button>
+  </div>
+</form>
