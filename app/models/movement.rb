@@ -25,7 +25,7 @@ class Movement < ActiveRecord::Base
 
   def self.transfer(origin: ,destination: , amount:, reason:) 
     raise ArgumentError, "Cuenta origen y destino deben ser distintas" if origin.id == destination.id
-    raise ArgumentError, "Cantidad a transferir no válida" if (amount <= 0 || amount >= origin.balance)
+    raise ArgumentError, "Cantidad a transferir no válida" if (amount <= 0 || amount > origin.balance)
     #raise ArgumentError, "Cuentas con distintos tipos de moneda" if (origin.coin != destination.coin) 
     #raise ArgumentError, "Cuenta emisora inactiva" if (origin.status == 'Inactivo')
     #raise ArgumentError, "Cuenta receptora inactiva" if (destination.status == 'Inactivo')
@@ -65,5 +65,5 @@ class Movement < ActiveRecord::Base
           user: origin.user,
         )
         raise
-      end 
+    end
 end
