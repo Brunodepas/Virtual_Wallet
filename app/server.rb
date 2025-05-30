@@ -121,7 +121,7 @@ class App < Sinatra::Application
       account = current_user.accounts.first
       movement = Movement.new(
         amount: params[:amount].to_f,
-        date: Time.now,
+        date: Time.current,
         movement_type: "Ingreso",
         status: "Pendiente",
         reason: nil,
@@ -229,7 +229,7 @@ class App < Sinatra::Application
     end
 
     begin
-      Movement.transfer(origin: origin, destination: destination, amount: amount, reason: reason)
+      Movement.transfer(origin: origin, destination: destination, amount: amount, reason: reason, date: Time.current)
       redirect '/home'
     rescue => e
       @error = "Error en la transferencia: #{e.message}"

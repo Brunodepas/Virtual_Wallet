@@ -33,7 +33,7 @@
             <tr>
                 <td><%= movement.id %></td>
                 <td><%= sprintf('%.2f', movement.amount) %></td>
-                <td><%= movement.date.strftime("%d/%m/%Y %H:%M") %></td>
+                <td><%= movement.date.in_time_zone("Buenos Aires").strftime("%d/%m/%Y %H:%M") %></td>
                 <td><%= movement.origin&.alias || "Sin cuenta" %></td>
                 <td><%= movement.status %></td>
                 <td>
