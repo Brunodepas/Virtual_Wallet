@@ -92,7 +92,7 @@ class App < Sinatra::Application
         )
           ts = Time.current.strftime('%Y%m%d%H%M%S%6N')
           Account.create!(
-          alias: params[:first_name] + params[:dni] + "P",
+          alias: (params[:first_name] + params[:dni] + "P").gsub(" ", ""),
           cvu: ts + params[:dni],
           balance: 0,
           amount_point: 0,
@@ -121,7 +121,7 @@ class App < Sinatra::Application
       account = current_user.accounts.first
       movement = Movement.new(
         amount: params[:amount].to_f,
-        date: Time.current,
+        date: Time.now,
         movement_type: "Ingreso",
         status: "Pendiente",
         reason: nil,
@@ -229,7 +229,7 @@ class App < Sinatra::Application
     end
 
     begin
-      Movement.transfer(origin: origin, destination: destination, amount: amount, reason: reason, date: Time.current)
+      Movement.transfer(origin: origin, destination: destination, amount: amount, reason: reason)
       redirect '/home'
     rescue => e
       @error = "Error en la transferencia: #{e.message}"
