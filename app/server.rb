@@ -87,7 +87,7 @@ class App < Sinatra::Application
           user = User.create!(
           username: params[:username],
           password: params[:password],
-          admin_check: params[:is_admin] == "on",
+          admin_check: false,
           person: person
         )
           ts = Time.current.strftime('%Y%m%d%H%M%S%6N')
