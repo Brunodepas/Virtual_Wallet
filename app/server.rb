@@ -135,7 +135,7 @@ class App < Sinatra::Application
         redirect '/income'
       else
         @error = "Error: no se pudo procesar el ingreso"
-      erb :income
+        erb :income
       end
     else
       redirect '/'
@@ -394,6 +394,84 @@ class App < Sinatra::Application
     else
       @error = "Hubo un problema"
       redirect '/forgot'
+    end
+  end
+
+  get '/promos' do
+    redirect '/' unless logged_in?
+    account = current_user.accounts.first
+    @purchased_promos = account.promos
+    @available_promos = Promo.where.not(id: @purchased_promos.pluck(:id))
+    @message = session.delete(:message)
+    erb :promos
+  end
+
+  post '/promos/:id/comprar' do
+    promo = Promo.find(params[:id])
+    account = current_user.accounts.first
+  
+    if account.promos.include?(promo)
+      session[:message] = "Ya compraste esta promo."
+    elsif account.amount_point < promo.cost
+      session[:message] = "No tenés suficientes puntos."
+    else
+      # Realizar la compra
+      account.promos << promo
+      account.update(amount_point: account.amount_point - promo.cost)
+      session[:message] = "Promo comprada exitosamente."
+    end
+    redirect '/promos'
+  end
+
+  get '/discounts' do
+    redirect '/' unless logged_in?
+    account = current_user.accounts.first
+    @purchased_discounts = account.discounts
+    @available_discounts = Discount.where.not(id: @purchased_discounts.pluck(:id))
+    @message = session.delete(:message)
+    erb :discounts
+  end
+
+  post '/discounts/:id/comprar' do
+    discount = Discount.find(params[:id])
+    account = current_user.accounts.first
+  
+    if account.discounts.include?(discount)
+      session[:message] = "Ya compraste este descuento."
+    elsif account.amount_point < discount.cost
+      session[:message] = "No tenés suficientes puntos."
+    else
+      # Realizar la compra
+      account.discounts << discount
+      account.update(amount_point: account.amount_point - discount.cost)
+      session[:message] = "Descuento comprado exitosamente."
+    end
+    redirect '/discounts'
+  end
+  
+
+  get '/exchange' do
+    @message = session.delete(:message)
+    erb :exchange
+  end
+
+
+  post '/exchange' do
+    if current_user
+      account = current_user.accounts.first
+      points = account.amount_point
+      amount = params[:amount].to_f
+      if amount > 0 && points >= amount
+        account.update(amount_point: account.amount_point - amount)
+        account.update(balance: account.balance + (amount*100)/1000)
+        @message = "Intercambio generado correctamente"
+        erb :exchange
+      else
+        @error = "Error: no se pudo procesar el intercambio"
+        erb :exchange
+      end
+    else
+      redirect '/'
     end
   end
 

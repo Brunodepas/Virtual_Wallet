@@ -1,0 +1,40 @@
+<h2>Descuentos disponibles</h2>
+
+<% if @message %>
+  <div><%= @message %></div>
+<% end %>
+
+
+<% if @available_discounts.any? %>
+  <% @available_discounts.each do |discount| %>
+    <div class="discount-card">
+      <p><strong><%= discount.description %></strong></p>
+      <p>Costo: <%= discount.cost %> pts</p>
+      <p>Porcentaje: <%= discount.percentage %></p>
+      <form action="/discounts/<%= discount.id %>/comprar" method="post">
+        <button <%= 'disabled' if current_user.accounts.first.amount_point < discount.cost %>>
+          Comprar
+        </button>
+      </form>
+    </div>
+  <% end %>
+<% else %>
+  <p>No hay nuevos descuentos disponibles.</p>
+<% end %>
+
+<hr>
+
+<h2>Descuentos comprados</h2>
+
+<% if @purchased_discounts.any? %>
+  <% @purchased_discounts.each do |discount| %>
+    <div class="discount-card">
+      <p><strong><%= discount.description %></strong></p>
+      <p>Costo: <%= discount.cost %> pts</p>
+      <p>Porcentaje: <%= discount.percentage %></p>
+      <p><em>Ya comprado</em></p>
+    </div>
+  <% end %>
+<% else %>
+  <p>Todavía no compraste ningun descuento.</p>
+<% end %>
