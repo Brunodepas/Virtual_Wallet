@@ -5,6 +5,10 @@ class Account < ActiveRecord::Base
     has_many :destination, class_name:'Movement', foreign_key: 'destination_id'
     has_many :history, class_name:'Movement', foreign_key: 'history_id'
     has_many :savings
+    has_many :AccountsPromo
+    has_many :promos, through: :AccountsPromo
+    has_many :AccountsDiscount
+    has_many :discounts, through: :AccountsDiscount
 
     #Validations
     VALID_COINS = ['Peso', 'Dólar']

@@ -20,6 +20,7 @@ class Movement < ActiveRecord::Base
   private def ingresoDinero
     if saved_change_to_status? && movement_type == 'Ingreso' && status == 'Exitosa'
       origin.update(balance: origin.balance + amount)
+      origin.update(amount_point: origin.amount_point + (amount * 100)/10000)
     end
   end
 
@@ -35,6 +36,7 @@ class Movement < ActiveRecord::Base
       #Modifico balance de cuentas implicadas
       # Modificar balances
       origin.update!(balance: origin.balance - amount)
+      origin.update!(amount_point: origin.amount_point + (amount * 75)/10000)
       destination.update!(balance: destination.balance + amount)
 
       #Registro la transferencia exitosa
@@ -51,19 +53,19 @@ class Movement < ActiveRecord::Base
       )
     end
 
-    rescue => error
-      #Registro la transferencia fallida
-      Movement.create!(
-          amount: amount,
-          date: Time.current,
-          movement_type: 'Transferencia',
-          status: 'Fallido',
-          reason: error.message,
-          origin: origin,
-          destination: destination,
-          history: origin,
-          user: origin.user,
-        )
-        raise
-    end
+  rescue => error
+    #Registro la transferencia fallida
+    Movement.create!(
+        amount: amount,
+        date: Time.current,
+        movement_type: 'Transferencia',
+        status: 'Fallido',
+        reason: error.message,
+        origin: origin,
+        destination: destination,
+        history: origin,
+        user: origin.user,
+      )
+      raise
+  end
 end

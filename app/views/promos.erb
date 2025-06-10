@@ -1,0 +1,40 @@
+<h2>Promociones disponibles</h2>
+
+<% if @message %>
+  <div><%= @message %></div>
+<% end %>
+
+
+<% if @available_promos.any? %>
+  <% @available_promos.each do |promo| %>
+    <div class="promo-card">
+      <p><strong><%= promo.description %></strong></p>
+      <p>Costo: <%= promo.cost %> pts</p>
+      <p>Vencimiento: <%= promo.end_date %></p>
+      <form action="/promos/<%= promo.id %>/comprar" method="post">
+        <button <%= 'disabled' if current_user.accounts.first.amount_point < promo.cost %>>
+          Comprar
+        </button>
+      </form>
+    </div>
+  <% end %>
+<% else %>
+  <p>No hay nuevas promociones disponibles.</p>
+<% end %>
+
+<hr>
+
+<h2>Promociones compradas</h2>
+
+<% if @purchased_promos.any? %>
+  <% @purchased_promos.each do |promo| %>
+    <div class="promo-card">
+      <p><strong><%= promo.description %></strong></p>
+      <p>Costo: <%= promo.cost %> pts</p>
+      <p>Vencimiento: <%= promo.end_date %></p>
+      <p><em>Ya comprada</em></p>
+    </div>
+  <% end %>
+<% else %>
+  <p>Todavía no compraste ninguna promoción.</p>
+<% end %>
