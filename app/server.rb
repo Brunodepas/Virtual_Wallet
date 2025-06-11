@@ -20,6 +20,8 @@ class App < Sinatra::Application
     set :logger, logger
 
     set :views, File.expand_path('../views', __FILE__)
+    set :public_folder, 'public'
+
 
 
     register Sinatra::Reloader

@@ -2,25 +2,42 @@
 <html>
   <head>
     <title>Wink</title>
+    <link rel="stylesheet" href="/css/layout.css">
   </head>
   <body>
-    <header>
-      <h1>Wink</h1>
-      <nav>
-        <a href="/home">Home</a> |
-        <a href="/income">Ingresar Dinero</a> |
-        <a href="/transfer">Transferir Dinero</a> |
-        <a href="/my_saving">Ver ahorros</a> |
-        <a href="/promos">Ver Promociones</a> |
-        <a href="/discounts">Ver Descuentos</a> |
-        <a href="/exchange">Intercambiar Puntos</a> |
-        <a href="/logout">Log Out</a>
-        <% if current_user&.admin_check %>
-          | <a href="/manage_incomes">Gestionar Ingresos Pendientes</a>
-        <% end %>
-      </nav>
-      <hr>
-    </header>
-    <%= yield %>
+    <div class="layout">
+      <aside class="sidebar">
+        <!-- Acá va el logo -->
+        <div class="logo"><img src="/images/Logo.png" alt="Logo de Wink" class="logo-img"></div>
+
+        <nav class="nav-links">
+          <a href="/home" class="<%= 'active' if request.path_info == '/home' %>">Home</a>
+          <a href="/income" class="<%= 'active' if request.path_info == '/income' %>">Ingresar Dinero</a>
+          <a href="/transfer" class="<%= 'active' if request.path_info == '/transfer' %>">Transferir Dinero</a>
+          <a href="/my_saving" class="<%= 'active' if request.path_info == '/my_saving' %>">Ver Ahorros</a>
+          <a href="/promos" class="<%= 'active' if request.path_info == '/promos' %>">Ver Promociones</a>
+          <a href="/discounts" class="<%= 'active' if request.path_info == '/discounts' %>">Ver Descuentos</a>
+          <a href="/exchange" class="<%= 'active' if request.path_info == '/exchange' %>">Intercambiar Puntos</a>
+          <a href="/logout">Log Out</a>
+          <% if current_user&.admin_check %>
+            <a href="/manage_incomes" class="<%= 'active' if request.path_info == '/manage_incomes' %>">Gestionar Ingresos Pendientes</a>
+          <% end %>
+        </nav>
+      </aside>
+
+      <div class="content">
+        <header class="topbar">
+          <div class="topbar-content">
+            <div class="user-greeting">Hola, <%= current_user.username %>!</div>
+            <div class="config-button">Configuracion</div>
+          </div>
+        </header>
+
+        <main class="main-content">
+          <%= yield %>
+        </main>
+      </div>
+    </div>
   </body>
+
 </html>
