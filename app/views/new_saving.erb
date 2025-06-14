@@ -4,6 +4,13 @@
 
 <body>
     <h1>Nuevo ahorro</h1>
+    
+    <% if @error %>
+        <p style="color: red;"><%= @error %></p>
+    <% end %>
+    <% if @message %>
+        <p style="color: green;"><%= @message %></p>
+    <% end %>
      <form action="/new_saving" method="post">
      <label> Nombre del ahorro: <input type= "text" name="description" required></label>
         <br>
@@ -12,6 +19,8 @@
     <input type="number" name="goal_amount" required>
     <br>
     <br>
+
+    
     <button type = "submit">Crear ahorro</button>
    </form>
 <body>

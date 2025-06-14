@@ -252,10 +252,15 @@ class App < Sinatra::Application
       goal_amount: params[:goal_amount].to_f,
       account: account
     )
+
+
     if saving.save
-      "Ahorro creado correctamente"
+        session[:message] = "Ahorro creado!"
+                redirect '/my_saving'
+
     else
-      "Error: no se pudo crear el ahorro"
+      @error = "Error: no se pudo crear el ahorro"
+        erb :new_saving
     end
     else
       redirect '/'
@@ -266,6 +271,8 @@ class App < Sinatra::Application
     if current_user
       account = current_user.accounts.first
       @savings = account.savings
+      @message = session.delete(:message)
+
       erb :my_saving
     else
       redirect '/'
@@ -315,7 +322,6 @@ class App < Sinatra::Application
         elsif saving.current_amount + amount > saving.goal_amount
           "Superarías la meta del ahorro."
         else
-          # Restar a la cuenta y sumar al ahorro
           account.balance -= amount
           saving.current_amount += amount
 
@@ -332,6 +338,32 @@ class App < Sinatra::Application
       redirect '/'
     end
   end
+
+post '/my_saving/:id/redeem' do
+  if current_user
+    saving = Saving.find(params[:id])
+    account = saving.account
+
+    if account.user_id == current_user.id
+        account.balance += saving.current_amount
+
+        if account.save
+          saving.destroy  
+          session[:message] = "Ahorro recuperado exitosamente"
+        else
+          session[:message] = "Error al transferir el dinero."
+        end
+      else
+      session[:message] = "No tenés permiso para acceder a este ahorro."
+    end
+
+    redirect '/my_saving'
+  else
+    redirect '/'
+    end
+  end
+
+
 
   get '/forgot' do
     erb :forgot, layout: false

@@ -8,6 +8,11 @@
     <br>
     <br>
 
+    <% if @message %>
+     <p style="color: green;"><%= @message %></p>
+    <% end %>
+
+
     <% if @savings.any? %>
   
     <% @savings.each do |saving| %>
@@ -18,6 +23,11 @@
         Meta: $<%= saving.goal_amount %>
         <% if saving.current_amount >= saving.goal_amount %>
         <p style="color: green;"> Meta alcanzada! </p>
+
+        <form action="/my_saving/<%= saving.id %>/redeem" method="post" style="display:inline;">
+        <button type="submit">Recuperar dinero</button>
+        </form>
+
     <% else %>
               <a href="/add_to_saving/<%= saving.id %>"><button>Agregar dinero</button></a>
 
