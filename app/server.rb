@@ -196,6 +196,46 @@ class App < Sinatra::Application
     redirect '/manage_incomes'
   end
 
+  get '/manage_discounts' do
+    @discounts = Discount.all
+    erb :manage_discounts
+  end
+
+  post '/manage_discounts' do
+    Discount.create(
+      description: params[:description],
+      cost: params[:cost],
+      percentage: params[:percentage]
+    )
+    redirect '/manage_discounts'
+  end
+
+  post '/manage_discounts/:id/delete' do
+    discount = Discount.find(params[:id])
+    discount.destroy
+    redirect '/manage_discounts'
+  end
+
+  get '/manage_promos' do
+    @promos = Promo.all
+    erb :manage_promos
+  end
+
+  post '/manage_promos' do
+    Promo.create(
+      description: params[:description],
+      cost: params[:cost],
+      end_date: params[:end_date]
+    )
+    redirect '/manage_promos'
+  end
+
+  post '/manage_promos/:id/delete' do
+    promo = Promo.find(params[:id])
+    promo.destroy
+    redirect '/manage_promos'
+  end
+
   get '/transfer' do
     redirect '/' unless logged_in?
     @accounts = current_user.accounts
