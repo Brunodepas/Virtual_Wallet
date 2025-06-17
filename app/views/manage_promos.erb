@@ -1,0 +1,44 @@
+<head>
+  <link rel="stylesheet" href="/assets/layout.css"> <!-- Ya lo usás -->
+  <link rel="stylesheet" href="/assets/manage.css"> <!-- Solo para vistas de administración -->
+</head>
+
+<h1>Administrar Promociones</h1>
+
+<!-- Sección de listado de promociones activas -->
+<section class="promos-list">
+  <h2>Promociones Activas</h2>
+
+  <% if @promos.any? %>
+    <ul>
+      <% @promos.each do |promo| %>
+        <li>
+          <strong><%= promo.description %></strong> - <%= promo.end_date %>
+          <form action="/manage_promos/<%= promo.id %>/delete" method="POST" style="display:inline;">
+            <button type="submit" onclick="return confirm('¿Seguro que quieres eliminar esta promoción?')">Eliminar</button>
+          </form>
+        </li>
+      <% end %>
+    </ul>
+  <% else %>
+    <p>No hay promociones activas.</p>
+  <% end %>
+</section>
+
+<!-- Formulario para crear una nueva promoción -->
+<section class="new-promo-form">
+  <h2>Crear Nueva Promoción</h2>
+
+  <form action="/manage_promos" method="POST">
+    <label for="description">Descripción:</label>
+    <input type="text" name="description" id="description" required>
+
+    <label for="cost">Costo:</label>
+    <input type="text" name="cost" id="cost" required>
+
+    <label for="end_date">Fecha de vencimiento:</label>
+    <input type="date" name="end_date" id="end_date" min="17/06/2025" required>
+
+    <button type="submit">Crear Promoción</button>
+  </form>
+</section>
