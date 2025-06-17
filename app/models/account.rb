@@ -1,13 +1,13 @@
 class Account < ActiveRecord::Base
     #Relationships
     belongs_to :user
-    has_many :origin, class_name:'Movement', foreign_key: 'origin_id'
-    has_many :destination, class_name:'Movement', foreign_key: 'destination_id'
-    has_many :history, class_name:'Movement', foreign_key: 'history_id'
-    has_many :savings
-    has_many :AccountsPromo
+    has_many :origin, class_name:'Movement', foreign_key: 'origin_id', dependent: :destroy
+    has_many :destination, class_name:'Movement', foreign_key: 'destination_id', dependent: :destroy
+    has_many :history, class_name:'Movement', foreign_key: 'history_id', dependent: :destroy
+    has_many :savings, dependent: :destroy
+    has_many :AccountsPromo, dependent: :destroy
     has_many :promos, through: :AccountsPromo
-    has_many :AccountsDiscount
+    has_many :AccountsDiscount, dependent: :destroy
     has_many :discounts, through: :AccountsDiscount
 
     #Validations
