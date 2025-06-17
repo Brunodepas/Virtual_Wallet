@@ -121,8 +121,12 @@ end
   end
 
   get '/income' do
-    @message = session.delete(:message)
-    erb :income
+    if current_user
+      @message = session.delete(:message)
+      erb :income
+    else
+      redirect '/'
+    end
   end
 
 
@@ -401,14 +405,14 @@ post '/my_saving/:id/redeem' do
         else
           session[:message] = "Error al transferir el dinero."
         end
-      else
+    else
       session[:message] = "No tenés permiso para acceder a este ahorro."
     end
 
     redirect '/my_saving'
   else
     redirect '/'
-    end
+  end
   end
 
 
@@ -533,8 +537,12 @@ post '/my_saving/:id/redeem' do
   
 
   get '/exchange' do
-    @message = session.delete(:message)
-    erb :exchange
+    if current_user
+      @message = session.delete(:message)
+      erb :exchange
+    else
+      redirect '/'
+    end
   end
 
 
@@ -620,6 +628,7 @@ post '/my_saving/:id/redeem' do
   end
 
  get '/history' do
+  redirect '/' unless logged_in?
   @account = current_user.accounts.first
   @movements = Movement
     .where("origin_id = :id OR destination_id = :id", id: @account.id)

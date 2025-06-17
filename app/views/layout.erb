@@ -21,7 +21,6 @@
           <% if current_user&.admin_check %>
             <a href="/manage_incomes" class="<%= 'active' if request.path_info == '/manage_incomes' %>">Gestionar Ingresos Pendientes</a>
           <% end %>
-          <a href="/logout">Log Out</a>
         </nav>
       </aside>
 
@@ -29,7 +28,11 @@
         <header class="topbar">
           <div class="topbar-content">
             <div class="user-greeting">Hola, <%= current_user.username %>!</div>
-            <div class="config-button"><a href="/config">Configuracion</a></div>
+            <div class="buttons">
+              <%# <a href="/dark">Dark</a> %>
+              <a href="/config"><img src="/images/settings.png" alt="Config"></a>
+              <a href="/logout"><img src="/images/log_out.png" alt="Log-out"></a>
+            </div>
           </div>
         </header>
 
