@@ -1,0 +1,33 @@
+<h2>Historial de Movimientos</h2>
+
+<table style="border-collapse: collapse;">
+  <thead>
+    <tr>
+      <th style="border: 1px solid black; padding-left: 1cm;">Fecha</th>
+      <th style="border: 1px solid black; padding-left: 1cm;">Tipo</th>
+      <th style="border: 1px solid black; padding-left: 1cm;">Motivo</th>
+      <th style="border: 1px solid black; padding-left: 1cm;">Monto</th>
+      <th style="border: 1px solid black; padding-left: 1cm;">Origen</th>
+      <th style="border: 1px solid black; padding-left: 1cm;">Destino</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @movements.each do |m| %>
+      <tr>
+        <td style="border: 1px solid black; padding-left: 1cm;"><%= m.created_at.strftime("%d/%m/%Y %H:%M") %></td>
+        <td style="border: 1px solid black; padding-left: 1cm;"><%= m.movement_type %></td>
+        <td style="border: 1px solid black; padding-left: 1cm;"><%= m.reason %></td>
+        <td style="border: 1px solid black; padding-left: 1cm;"><%= m.amount %></td>
+        <td style="border: 1px solid black; padding-left: 1cm;">
+          <%= "#{m.origin&.user&.person&.first_name} #{m.origin&.user&.person&.last_name}".strip.presence || "Nulo" %>
+        </td>
+        <td style="border: 1px solid black; padding-left: 1cm;">
+          <% if m.destination.present? && m.destination.user&.person.present? %>
+          <%= "#{m.destination.user.person.first_name} #{m.destination.user.person.last_name}".strip %>
+          <% else %>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
