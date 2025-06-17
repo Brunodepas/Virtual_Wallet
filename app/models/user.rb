@@ -1,6 +1,6 @@
 class User < ActiveRecord::Base
-  belongs_to :person
-  has_many :accounts
+  belongs_to :person, dependent: :destroy
+  has_many :accounts, dependent: :destroy
   
   validates :username, presence: true, uniqueness: true
   validates :password, presence: true

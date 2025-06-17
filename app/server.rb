@@ -104,7 +104,8 @@ class App < Sinatra::Application
           user: user
         )
       end
-      redirect '/'
+      @message = "Cuenta creada con exito"
+      erb :login, layout: false
     rescue ActiveRecord::RecordInvalid => e
       @error = "Error al registrar: #{e.message}"
       erb :register, layout: false
@@ -548,5 +549,68 @@ post '/my_saving/:id/redeem' do
       redirect '/'
     end
   end
+
+  get '/config' do
+    redirect '/' unless logged_in?
+    @message = session.delete(:message)
+    erb :config
+  end
+
+  post '/config' do
+    redirect '/' unless logged_in?
+  
+    user = current_user
+    if user.admin_check == false
+      person = user.person
+      account = user.accounts.first
+    
+      begin
+        ActiveRecord::Base.transaction do
+          # Solo actualizamos si el parámetro está presente y no vacío
+          person.phone = params[:phone] unless params[:phone].to_s.strip.empty?
+          person.email = params[:email] unless params[:email].to_s.strip.empty?
+          user.username = params[:username] unless params[:username].to_s.strip.empty?
+          user.password = params[:password] unless params[:password].to_s.strip.empty?
+          account.alias = params[:alias] unless params[:alias].to_s.strip.empty?
+    
+          person.save!
+          user.save!
+          account.save!
+        end
+    
+        session[:message] = "Datos actualizados correctamente"
+      rescue => e
+        logger.error "Error actualizando datos: #{e.message}"
+        session[:message] = "Hubo un error al actualizar los datos."
+      end
+    
+      redirect '/config'
+    else
+      session[:message] = "No se puede modificar una cuenta Admin"
+      redirect '/config'
+    end
+  end
+  
+  post '/delete_account' do
+    redirect '/' unless logged_in?
+  
+    user = current_user
+    if user.admin_check == false
+      begin
+        user.destroy
+        session.clear
+        @message = "Cuenta eliminada con exito"
+        erb :login, layout: false
+      rescue => e
+        logger.error "Error al eliminar cuenta: #{e.message}"
+        session[:message] = "Error al eliminar la cuenta."
+        redirect '/config'
+      end
+    else
+      session[:message] = "No se puede eliminar una cuenta Admin"
+      redirect '/config'
+    end
+  end
+  
 
 end

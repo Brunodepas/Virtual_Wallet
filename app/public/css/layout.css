@@ -19,6 +19,7 @@ html {
   flex-direction: column;
   padding: 20px;
   flex-shrink: 0;
+  justify-content: space-between;
 }
 
 .logo {
@@ -31,12 +32,13 @@ html {
 .nav-links {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 20px;
 }
 
 .nav-links a {
+  font-size: 14px;
   color: #000000;
-  background-color: #b9d6f2; /* Azul más claro al hacer hover */
+  background-color: #b9d6f2;
   text-decoration: none;
   padding: 10px;
   border-radius: 6px;
@@ -44,7 +46,7 @@ html {
 }
 
 .nav-links a:hover {
-  background-color: #73a7da; /* Azul más claro al hacer hover */
+  background-color: #73a7da;
 }
 
 .nav-links a.active {
@@ -64,14 +66,14 @@ html {
   border-bottom: 1px solid #ccc;
   display: flex;
   align-items: center;
-  /* justify-content: space-between; */
+  justify-content: space-between;
   padding: 0 20px;
 }
 
 .topbar-content {
   display: flex;
   justify-content: space-between;
-  /* align-items: center; */
+  align-items: center;
   width: 100%;
 }
 
@@ -82,7 +84,7 @@ html {
 }
 
 .config-button {
-  font-size: 14px;
+  font-size: 20px;
   color: #007bff;
   cursor: pointer;
 }
