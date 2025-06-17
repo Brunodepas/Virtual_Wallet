@@ -59,12 +59,19 @@ class App < Sinatra::Application
   end
 
   get '/home' do
-    if current_user
-      erb :home
-    else
-      redirect '/'
-    end
+  if current_user
+    @account = current_user.accounts.first
+    @movements = Movement
+      .where("origin_id = :id OR destination_id = :id", id: @account.id)
+      .where(status: ['Pendiente', 'Exitosa'])
+      .order(created_at: :desc)
+      .limit(5) 
+    erb :home
+  else
+    redirect '/'
   end
+end
+
 
   get '/logout' do
     session.clear
@@ -611,6 +618,13 @@ post '/my_saving/:id/redeem' do
       redirect '/config'
     end
   end
-  
 
+ get '/history' do
+  @account = current_user.accounts.first
+  @movements = Movement
+    .where("origin_id = :id OR destination_id = :id", id: @account.id)
+    .where(status: ['Pendiente', 'Exitosa'])
+    .order(created_at: :desc)
+  erb :history
+  end
 end
