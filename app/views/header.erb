@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Wink</title>
+    <link rel="stylesheet" href="/css/header.css?v=<%= Time.now.to_i %>">
+    <link rel="icon" href="/images/logo2.png" type="image/png">
+  </head>
+  <body>
+    <header class="auth-header">
+      <div class="auth-header-content">
+        <!-- Aquí va el logo -->
+        <img src="/images/logo2.png" alt="Logo de Wink" />
+      </div>
+    </header>
+
+    <main class="main-content">
+      <%= yield %>
+    </main>
+  </body>
+
+</html>

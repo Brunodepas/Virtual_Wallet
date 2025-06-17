@@ -1,0 +1,39 @@
+body,
+html {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+  min-height: 100vh;
+}
+
+.auth-header {
+  padding: 15px;
+  background: #b9d6f2;
+  background: linear-gradient(
+    90deg,
+    rgba(185, 214, 242, 1) 0%,
+    rgba(185, 214, 242, 1) 50%,
+    rgba(107, 124, 140, 1) 100%
+  );
+  border-bottom: 1px solid #ddd;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.auth-header-content {
+  width: 100%;
+  max-width: 1000px;
+  padding: 0 20px;
+  display: flex;
+  align-items: center;
+}
+
+.auth-header-content img {
+  height: 85px;
+}
+
+.main-content {
+  flex: 1;
+}

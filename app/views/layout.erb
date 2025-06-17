@@ -3,12 +3,13 @@
   <head>
     <title>Wink</title>
     <link rel="stylesheet" href="/css/layout.css?v=<%= Time.now.to_i %>">
+    <link rel="icon" href="/images/logo2.png" type="image/png">
   </head>
   <body>
     <div class="layout">
       <aside class="sidebar">
         <!-- Acá va el logo -->
-        <div class="logo"><img src="/images/Logo.png" alt="Logo de Wink" class="logo-img"></div>
+        <div class="logo"><img src="/images/logo.png" alt="Logo de Wink" class="logo-img"></div>
 
         <nav class="nav-links">
           <a href="/home" class="<%= 'active' if request.path_info == '/home' %>">Home</a>

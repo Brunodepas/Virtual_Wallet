@@ -1,28 +1,42 @@
+<!DOCTYPE html>
+<html>
 <head>
-    <title>Log in</title>
-<head>
+  <title>Iniciar Sesión</title>
+  <link rel="stylesheet" href="/css/login.css?v=<%= Time.now.to_i %>">
+</head>
 <body>
-    <h1>Indique su Usuario y Contraseña</h1>
-    <% if @error %>
-        <p style="color: red;"><%= @error %></p>
-    <% end %>
-    <% if @message %>
-        <p style="color: green;"><%= @message %></p>
-    <% end %>
-    <form action="/" method="post">
-        <label> Usuario: <input type= "text" name="username" required></label>
-        <br>
-        <br>
-        <label> Contraseña: <input type= "password" name= "password" required></label>
-        <br>
-        <br>
-        <button type = "submit"> Ingresar </button>
-        <br>
-        <br>
-        <a href = "/forgot">¿Olvidaste tu contraseña?</a>
-        <br>
-        <br>
-        <p>¿No tenes cuenta?</p>
-        <a href = "/register">Registrate</a>
-    </form>
-<body>
+  <div class="auth-container">
+    <div class="auth-box">
+      <div class="auth-form">
+        <h2>Iniciar Sesión</h2>
+
+        <% if @error %>
+          <p class="error"><%= @error %></p>
+        <% end %>
+        <% if @message %>
+          <p class="message"><%= @message %></p>
+        <% end %>
+
+        <form action="/" method="post">
+          <label for="username">Usuario</label>
+          <input type="text" name="username" id="username" required>
+
+          <label for="password">Contraseña</label>
+          <input type="password" name="password" id="password" required>
+
+          <button type="submit">Ingresar</button>
+
+          <div class="auth-links">
+            <a href="/forgot">¿Olvidaste tu contraseña?</a>
+            <p>¿No tenés cuenta? <a href="/register">Registrate</a></p>
+          </div>
+        </form>
+      </div>
+
+      <div class="auth-image">
+        <img src="/images/logo3.png" alt="Logo de Wink" class="logo-img">
+      </div>
+    </div>
+  </div>
+</body>
+</html>

@@ -41,7 +41,7 @@ class App < Sinatra::Application
   end
     
   get '/' do
-    erb :login, layout: false
+    erb :login, layout: :header
   end
 
   post '/' do
@@ -54,7 +54,7 @@ class App < Sinatra::Application
       redirect '/home'
     else
       @error = "Usuario o contraseña incorrectos"
-      erb :login, layout: false
+      erb :login, layout: :header
     end
   end
 
@@ -79,7 +79,7 @@ end
   end
 
   get '/register' do
-    erb :register, layout: false
+    erb :register, layout: :header
   end
     
   post '/register' do
@@ -112,10 +112,10 @@ end
         )
       end
       @message = "Cuenta creada con exito"
-      erb :login, layout: false
-    rescue ActiveRecord::RecordInvalid => e
-      @error = "Error al registrar: #{e.message}"
-      erb :register, layout: false
+      erb :login, layout: :header
+    rescue ActiveRecord::RecordInvalid
+      @error = "Error al registrarse"
+      erb :register, layout: :header
     end
     
   end
@@ -615,7 +615,7 @@ post '/my_saving/:id/redeem' do
         user.destroy
         session.clear
         @message = "Cuenta eliminada con exito"
-        erb :login, layout: false
+        erb :login, layout: :header
       rescue => e
         logger.error "Error al eliminar cuenta: #{e.message}"
         session[:message] = "Error al eliminar la cuenta."
