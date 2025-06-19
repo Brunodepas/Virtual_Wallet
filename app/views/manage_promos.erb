@@ -4,41 +4,43 @@
 <div class="panel">
   <h1>Administrar Promociones</h1>
 
-  <!-- Sección de listado de promociones activas -->
-  <section class="benefit-list">
-    <h2>Promociones Activas</h2>
+  <div class="admin-benefit-layout">
+    <!-- Formulario a la izquierda -->
+    <section class="new-benefit-form">
+      <h2>Crear Nueva Promoción</h2>
 
-    <% if @promos.any? %>
-      <ul>
-        <% @promos.each do |promo| %>
-          <li>
-            <strong><%= promo.description %></strong> Venc: <%= promo.end_date %>
-            <form action="/manage_promos/<%= promo.id %>/delete" method="POST" style="display:inline;">
-              <button type="submit" onclick="return confirm('¿Seguro que quieres eliminar esta promoción?')">Eliminar</button>
-            </form>
-          </li>
-        <% end %>
-      </ul>
-    <% else %>
-      <p>No hay promociones activas.</p>
-    <% end %>
-  </section>
+      <form action="/manage_promos" method="POST">
+        <label for="description">Descripción</label>
+        <input type="text" name="description" id="description" required>
 
-  <!-- Formulario para crear una nueva promoción -->
-  <section class="new-benefit-form">
-    <h2>Crear Nueva Promoción</h2>
+        <label for="cost">Costo</label>
+        <input type="text" name="cost" id="cost" required>
 
-    <form action="/manage_promos" method="POST">
-      <label for="description">Descripción</label>
-      <input type="text" name="description" id="description" required>
+        <label for="end_date">Fecha de vencimiento</label>
+        <input type="date" name="end_date" id="end_date" min="<%= Date.today.strftime('%Y-%m-%d') %>" required>
 
-      <label for="cost">Costo</label>
-      <input type="text" name="cost" id="cost" required>
+        <button type="submit">Crear Promoción</button>
+      </form>
+    </section>
 
-      <label for="end_date">Fecha de vencimiento</label>
-      <input type="date" name="end_date" id="end_date" min="<%= Date.today.strftime('%Y-%m-%d') %>" required>
+    <!-- Lista a la derecha -->
+    <section class="benefit-list">
+      <h2>Promociones Activas</h2>
 
-      <button type="submit">Crear Promoción</button>
-    </form>
-  </section>
+      <% if @promos.any? %>
+        <ul>
+          <% @promos.each do |promo| %>
+            <li>
+              <strong><%= promo.description %></strong> Venc: <%= promo.end_date %>
+              <form action="/manage_promos/<%= promo.id %>/delete" method="POST" style="display:inline;">
+                <button type="submit" onclick="return confirm('¿Seguro que quieres eliminar esta promoción?')">Eliminar</button>
+              </form>
+            </li>
+          <% end %>
+        </ul>
+      <% else %>
+        <p>No hay promociones activas.</p>
+      <% end %>
+    </section>
+  </div>
 </div>

@@ -4,41 +4,43 @@
 <div class="panel">
   <h1>Administrar Descuentos</h1>
 
-  <!-- Sección de listado de descuentos activos -->
-  <section class="benefit-list">
-    <h2>Descuentos Activos</h2>
+  <div class="admin-benefit-layout">
+    <!-- Formulario a la izquierda -->
+    <section class="new-benefit-form">
+      <h2>Crear Nuevo Descuento</h2>
 
-    <% if @discounts.any? %>
-      <ul>
-        <% @discounts.each do |discount| %>
-          <li>
-            <strong><%= discount.description %></strong> Porc: <%= discount.percentage %>%
-            <form action="/manage_discounts/<%= discount.id %>/delete" method="POST" style="display:inline;">
-              <button type="submit" onclick="return confirm('¿Seguro que quieres eliminar esta promoción?')">Eliminar</button>
-            </form>
-          </li>
-        <% end %>
-      </ul>
-    <% else %>
-      <p>No hay descuentos activos.</p>
-    <% end %>
-  </section>
+      <form action="/manage_discounts" method="POST">
+        <label for="description">Descripción</label>
+        <input type="text" name="description" id="description" required>
 
-  <!-- Formulario para crear un nuevo descuento -->
-  <section class="new-benefit-form">
-    <h2>Crear Nuevo Descuento</h2>
+        <label for="cost">Costo</label>
+        <input type="text" name="cost" id="cost" required>
 
-    <form action="/manage_discounts" method="POST">
-      <label for="description">Descripción</label>
-      <input type="text" name="description" id="description" required>
+        <label for="percentage">Porcentaje</label>
+        <input type="number" name="percentage" id="percentage" min="1" max="100" required>
 
-      <label for="cost">Costo</label>
-      <input type="text" name="cost" id="cost" required>
+        <button type="submit">Crear Descuento</button>
+      </form>
+    </section>
 
-      <label for="percentage">Porcentaje</label>
-      <input type="number" name="percentage" id="percentage" min="1" max="100" required>
+    <!-- Lista a la derecha -->
+    <section class="benefit-list">
+      <h2>Descuentos Activos</h2>
 
-      <button type="submit">Crear Descuento</button>
-    </form>
-  </section>
+      <% if @discounts.any? %>
+        <ul>
+          <% @discounts.each do |discount| %>
+            <li>
+              <strong><%= discount.description %></strong> Porc: <%= discount.percentage %>
+              <form action="/manage_discounts/<%= discount.id %>/delete" method="POST" style="display:inline;">
+                <button type="submit" onclick="return confirm('¿Seguro que quieres eliminar este descuento?')">Eliminar</button>
+              </form>
+            </li>
+          <% end %>
+        </ul>
+      <% else %>
+        <p>No hay descuentos activos.</p>
+      <% end %>
+    </section>
+  </div>
 </div>
