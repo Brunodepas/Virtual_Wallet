@@ -67,7 +67,9 @@ class App < Sinatra::Application
       .where("origin_id = :id OR destination_id = :id", id: @account.id)
       .where(status: ['Pendiente', 'Exitosa'])
       .order(created_at: :desc)
-      .limit(5) 
+      .limit(8)
+    @account_discounts = @account.discounts 
+    @account_promos = @account.promos 
     erb :home
   else
     redirect '/'
