@@ -3,12 +3,14 @@
   <head>
     <title>Wink</title>
     <link rel="stylesheet" href="/css/layout.css?v=<%= Time.now.to_i %>">
+    <% if @custom_css %>
+      <link rel="stylesheet" href="<%= @custom_css %>?v=<%= Time.now.to_i %>">
+    <% end %>
     <link rel="icon" href="/images/logo2.png" type="image/png">
   </head>
   <body>
     <div class="layout">
       <aside class="sidebar">
-        <!-- Acá va el logo -->
         <div class="logo"><img src="/images/logo.png" alt="Logo de Wink" class="logo-img"></div>
 
         <nav class="nav-links">
@@ -30,7 +32,6 @@
           <div class="topbar-content">
             <div class="user-greeting">Hola, <%= current_user.username %>!</div>
             <div class="buttons">
-              <%# <a href="/dark">Dark</a> %>
               <a href="/config"><img src="/images/settings.png" alt="Config"></a>
               <a href="/logout"><img src="/images/log_out.png" alt="Log-out"></a>
             </div>

@@ -1,9 +1,13 @@
-<h2>Recuperar contraseña</h2>
-<form action="/forgot" method="post">
-  <% if @error %>
-    <p style="color: red;"><%= @error %></p>
-  <% end %>
-  <label for="email">Correo electrónico:</label>
-  <input type="email" name="email" required>
-  <button type="submit">Aceptar</button>
-</form>
+<div class="auth-container">
+  <div class="auth-box">
+    <h2>Recuperar contraseña</h2>
+    <% if @error %>
+    <p class="error"><%= @error %></p>
+    <% end %>
+    <form action="/forgot" method="post">
+      <label for="email">Correo electrónico:</label>
+      <input type="email" name="email" required>
+      <button type="submit">Aceptar</button>
+    </form>
+  </div>
+</div>
