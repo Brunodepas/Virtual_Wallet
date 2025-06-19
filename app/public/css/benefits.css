@@ -1,0 +1,91 @@
+/* Estructura general en columna */
+.benefit-section {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+    gap: 20px;
+    background-color: #d9d9d9;
+    overflow: hidden; /* Evita scroll lateral accidental */
+}
+
+/* Cada contenedor ocupa el 50% */
+.benefit-area {
+    flex: 1; /* Ocupa la mitad de la pantalla */
+    padding: 20px;
+    overflow-y: auto; /* Scroll si el contenido excede la altura */
+    display: flex;
+    flex-direction: column;
+}
+
+.benefit-area h2 {
+    margin-bottom: 20px;
+    color: #333;
+    text-align: center;
+}
+
+/* Contenedor de tarjetas */
+.benefit-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    max-width: 100%;
+    box-sizing: border-box; 
+    padding-top: 5%;
+}
+
+/* Tarjetas individuales */
+.benefit-card {
+    width: 100%;
+    max-width: 300px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    padding: 15px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    box-sizing: border-box; /* Asegura que padding no agregue ancho extra */
+}
+
+.benefit-card p {
+    margin: 5px 0;
+    font-size: 1em;
+    color: #444;
+}
+
+.benefit-card strong {
+    font-size: 1.1em;
+}
+
+.benefit-card em {
+    color: #888;
+    font-style: italic;
+}
+
+/* Botón Comprar */
+.benefit-card button {
+    background-color: #b9d6f2;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    margin-top: 10px;
+    align-self: center;
+}
+
+.benefit-card button:hover {
+    background-color: #8abdec;
+}
+
+.benefit-card button:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+}
+
+body {
+    overflow-x: hidden;
+}
