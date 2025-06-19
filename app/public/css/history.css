@@ -1,0 +1,55 @@
+.panel {
+    width: 100%;
+    background-color: #eeeeee;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    display: flex;
+    flex-direction: column;
+}
+
+h3 {
+    text-align: center;
+}
+
+.historial-item {
+    margin-bottom: 15px;
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 10px;
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+}
+
+.historial-item span {
+    display: block;
+}
+
+.historial-item .movement-type {
+    color: #666;
+    font-size: 0.9em;
+}
+
+.historial-item .movement-user {
+    font-size: 1em;
+    color: #333;
+}
+
+.historial-item .movement-amount {
+    font-size: 0.95em;
+}
+
+.historial-item .movement-date {
+    color: #999;
+    font-size: 0.85em;
+}
+
+.right-panel a {
+    text-decoration: none;
+    color: #4a148c;
+    font-weight: bold;
+}
+
+.right-panel a:hover {
+    text-decoration: underline;
+}
+
