@@ -48,9 +48,10 @@ class App < Sinatra::Application
   post '/' do
     username = params[:username]
     password = params[:password]
-    @user = User.find_by(username: username, password: password)
+    @user = User.find_by(username: username)
 
-    if @user
+    #como estamos usando bcrypt tengo que usar un metodo para encontrar la contraseña ya que no se guarda en texto plano
+    if @user && @user.autenthicate(password)
       session[:user_id] = @user.id
       redirect '/home'
     else
@@ -371,26 +372,33 @@ end
 
   post '/confirm_add_to_saving/:id' do
     if current_user
-      saving = Saving.find(params[:id])
-      account = saving.account
+      @saving = Saving.find(params[:id])
+      @account = @saving.account
 
-      if account.user == current_user
+      if @account.user == current_user
         amount = params[:amount].to_f
 
         if amount <= 0
-          "El monto debe ser mayor a cero."
-        elsif amount > account.balance
-          "No tenés suficiente saldo en la cuenta."
-        elsif saving.current_amount + amount > saving.goal_amount
-          "Superarías la meta del ahorro."
-        else
-          account.balance -= amount
-          saving.current_amount += amount
+          @error = "El monto debe ser mayor a cero."
+        erb :add_to_saving
+        elsif amount > @account.balance
+          @error = "No tenés suficiente saldo en la cuenta."
+        erb :add_to_saving
+        elsif @saving.current_amount + amount > @saving.goal_amount
+          @error = "Superarías la meta del ahorro."
+        erb :add_to_saving
 
-          if saving.save && account.save
-            redirect '/my_saving'
+        else
+          @account.balance -= amount
+          @saving.current_amount += amount
+
+          if @saving.save && @account.save
+            @success = "Se agregó correctamente al ahorro."
+          erb :add_to_saving
           else
-            "Error al guardar los cambios."
+            @error = "Error al guardar los cambios."
+          erb :add_to_saving
+
           end
         end
       else
