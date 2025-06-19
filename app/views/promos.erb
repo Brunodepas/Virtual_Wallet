@@ -1,40 +1,56 @@
-<h2>Promociones disponibles</h2>
+<link rel="stylesheet" href="/css/layout.css?v=<%= Time.now.to_i %>">
+<link rel="stylesheet" href="/css/header.css?v=<%= Time.now.to_i %>">
+<link rel="stylesheet" href="/css/benefits.css?v=<%= Time.now.to_i %>">
 
-<% if @message %>
-  <div><%= @message %></div>
-<% end %>
+<div class="benefit-section">
 
+  <!-- Parte superior: Promociones disponibles -->
+  <div class="benefit-area">
+    <h2>Promociones disponibles</h2>
 
-<% if @available_promos.any? %>
-  <% @available_promos.each do |promo| %>
-    <div class="promo-card">
-      <p><strong><%= promo.description %></strong></p>
-      <p>Costo: <%= promo.cost %> pts</p>
-      <p>Vencimiento: <%= promo.end_date %></p>
-      <form action="/promos/<%= promo.id %>/comprar" method="post">
-        <button <%= 'disabled' if current_user.accounts.first.amount_point < promo.cost %>>
-          Comprar
-        </button>
-      </form>
-    </div>
-  <% end %>
-<% else %>
-  <p>No hay nuevas promociones disponibles.</p>
-<% end %>
+    <% if @message %>
+      <div><%= @message %></div>
+    <% end %>
 
-<hr>
+    <% if @available_promos.any? %>
+      <div class="benefit-container">
+        <% @available_promos.each do |promo| %>
+          <div class="benefit-card">
+            <p><strong><%= promo.description %></strong></p>
+            <p>Costo: <%= promo.cost %> pts</p>
+            <p>Vencimiento: <%= promo.end_date %></p>
+            <form action="/promos/<%= promo.id %>/comprar" method="post">
+              <button <%= 'disabled' if current_user.accounts.first.amount_point < promo.cost %>> Comprar </button>
+            </form>
+          </div>
+        <% end %>
+      </div>
+    <% else %>
+      <p>No hay nuevas promociones disponibles.</p>
+    <% end %>
+  </div>
 
-<h2>Promociones compradas</h2>
+  <!-- Parte inferior: Promociones reclamadas -->
+  <div class="benefit-area">
+    <h2>Promociones reclamadas</h2>
 
-<% if @purchased_promos.any? %>
-  <% @purchased_promos.each do |promo| %>
-    <div class="promo-card">
-      <p><strong><%= promo.description %></strong></p>
-      <p>Costo: <%= promo.cost %> pts</p>
-      <p>Vencimiento: <%= promo.end_date %></p>
-      <p><em>Ya comprada</em></p>
-    </div>
-  <% end %>
-<% else %>
-  <p>Todavía no compraste ninguna promoción.</p>
-<% end %>
+    <% if @purchased_promos.any? %>
+      <div class="benefit-container">
+        <% @purchased_promos.each do |promo| %>
+          <div class="benefit-card">
+            <p><strong><%= promo.description %></strong></p>
+            <p>Costo: <%= promo.cost %> pts</p>
+            <p>Vencimiento: <%= promo.end_date %></p>
+            <p></p>
+            <form action="/promos/<%= promo.id %>/comprar" method="post">
+              <button <%= 'disabled' if current_user.accounts.first.amount_point < promo.cost %>> Usar </button>
+            </form>
+          </div>
+        <% end %>
+      </div>
+    <% else %>
+      <p>Todavía no compraste ninguna promoción.</p>
+    <% end %>
+  </div>
+
+</div>
