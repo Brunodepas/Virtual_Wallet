@@ -20,5 +20,23 @@ html {
   margin-bottom: 30px;
 }
 
+.error-message {
+  color: #d93025; /* rojo Google */
+  background-color: #ffe6e6;
+  padding: 8px 12px;
+  border-radius: 5px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.success-message {
+  color: #0f9d58; /* verde Google */
+  background-color: #e6ffee;
+  padding: 8px 12px;
+  border-radius: 5px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
 
 
