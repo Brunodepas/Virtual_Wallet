@@ -41,6 +41,7 @@ class App < Sinatra::Application
   end
     
   get '/' do
+    @custom_css = "/css/login.css"
     erb :login, layout: :header
   end
 
@@ -54,6 +55,7 @@ class App < Sinatra::Application
       redirect '/home'
     else
       @error = "Usuario o contraseña incorrectos"
+      @custom_css = "/css/login.css"
       erb :login, layout: :header
     end
   end
@@ -79,6 +81,7 @@ end
   end
 
   get '/register' do
+    @custom_css = "/css/register.css"
     erb :register, layout: :header
   end
     
@@ -112,9 +115,11 @@ end
         )
       end
       @message = "Cuenta creada con exito"
+      @custom_css = "/css/login.css"
       erb :login, layout: :header
     rescue ActiveRecord::RecordInvalid
       @error = "Error al registrarse"
+      @custom_css = "/css/register.css"
       erb :register, layout: :header
     end
     
@@ -400,7 +405,7 @@ post '/my_saving/:id/redeem' do
         account.balance += saving.current_amount
 
         if account.save
-          saving.destroy  
+          saving.destroy
           session[:message] = "Ahorro recuperado exitosamente"
         else
           session[:message] = "Error al transferir el dinero."
@@ -418,7 +423,8 @@ post '/my_saving/:id/redeem' do
 
 
   get '/forgot' do
-    erb :forgot, layout: false
+    @custom_css = "/css/forgot.css"
+    erb :forgot, layout: :header
   end
 
   post '/forgot' do
@@ -449,26 +455,31 @@ post '/my_saving/:id/redeem' do
       rescue => e
         logger.error "Error al enviar correo: #{e.message}"
         @error = "No se pudo enviar el correo. Intente más tarde."
-        erb :forgot, layout: false
+        @custom_css = "/css/forgot.css"
+        erb :forgot, layout: :header
       end
     end
   end
 
   get '/verify_code' do
-    erb :verify_code, layout: false
+    @custom_css = "/css/verify_code.css"
+    erb :verify_code, layout: :header
   end
 
   post '/verify_code' do
     if params[:code] == session[:codigo]
+      @custom_css = "/css/reset_password.css"
       redirect '/reset_password'
     else
       @error = "Codigo incorrecto"
+      @custom_css = "/css/verify_code.css"
       redirect '/verify_code'
     end
   end
 
   get '/reset_password' do
-    erb :reset_password, layout: false
+    @custom_css = "/css/reset_password.css"
+    erb :reset_password, layout: :header
   end
 
   post '/reset_password' do
@@ -476,9 +487,11 @@ post '/my_saving/:id/redeem' do
     if user
       user.update(password: params[:password])
       session.clear
+      @message = "Contraseña restablecida con exito"
       redirect '/'
     else
       @error = "Hubo un problema"
+      @custom_css = "/css/forgot.css"
       redirect '/forgot'
     end
   end
