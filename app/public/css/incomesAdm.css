@@ -1,0 +1,123 @@
+body {
+    font-family: sans-serif;
+    background-color: #f5f5f5;
+    margin: 0;
+}
+
+.panel {
+    width: 100%;
+    max-width: 900px;
+    margin: 0 auto;
+    background-color: #eeeeee;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    padding: 20px;
+}
+
+h3 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.notice {
+    color: green;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.error {
+    color: red;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.empty-msg {
+    text-align: center;
+    color: #555;
+    font-style: italic;
+}
+
+.movements-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px; /* espacio entre movimientos */
+}
+
+.historial-item {
+    background-color: #fff9c4;
+    border-radius: 8px;
+    padding: 15px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    display: flex;
+    flex-direction: column; /* columna por defecto para buena separación */
+    gap: 10px;
+}
+
+.historial-item-content {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.historial-item span {
+    display: block;
+}
+
+.movement-amount {
+    font-size: 1rem;
+    font-weight: bold;
+}
+
+.movement-date {
+    color: #999;
+    font-size: 0.85em;
+}
+
+.movement-type {
+    color: #666;
+    font-size: 0.9em;
+}
+
+.movement-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.accept-btn, .reject-btn {
+    padding: 6px 12px;
+    border: none;
+    border-radius: 4px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.accept-btn {
+    background-color: #4caf50;
+    color: #fff;
+}
+
+.accept-btn:disabled {
+    background-color: #81c784;
+}
+
+.reject-btn {
+    background-color: #f44336;
+    color: #fff;
+}
+
+.back-link {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.back-link a {
+    text-decoration: none;
+    color: #4a148c;
+    font-weight: bold;
+}
+
+.back-link a:hover {
+    text-decoration: underline;
+}
+
