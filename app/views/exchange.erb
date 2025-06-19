@@ -1,16 +1,27 @@
+<head>
+    <title>Intercambio de puntos</title>
+    <link rel="stylesheet" href="/css/exchange.css?v=<%= Time.now.to_i %>">
+</head>
 <body>
-    <h1>Indique la cantidad de puntos a intercambiar</h1>
-    <% if @error %>
-        <p style="color: red;"><%= @error %></p>
-    <% end %>
-    <% if @message %>
-        <p style="color: green;"><%= @message %></p>
-    <% end %>
-    <p>1000 pts = $100</p>
-    <form action="/exchange" method="post">
-        <input type= "number" name="amount" required>
-        <br>
-        <br>
-        <button type = "submit"> Cambiar </button>
-    </form>
-<body>
+    <div class="exchanges-wrapper">
+        <div class="transferencias-header">
+            <h1>Indique la cantidad de puntos a intercambiar</h1>
+
+            <% if @error %>
+                <p style="color: red;"><%= @error %></p>
+            <% end %>
+
+            <% if @message %>
+                <p style="color: green;"><%= @message %></p>
+            <% end %>
+
+            <p>1000 pts = $100</p>
+
+            <form action="/exchange" method="post">
+                <input type="number" name="amount" required>
+                <br><br>
+                <button type="submit">Cambiar</button>
+            </form>
+        </div>
+    </div>
+</body>
