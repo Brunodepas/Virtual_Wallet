@@ -1,58 +1,44 @@
-<!DOCTYPE html>
-<html>
-<head>
+
   <title>Gestionar Ingresos Pendientes</title>
-</head>
-<body>
+  <link rel="stylesheet" href="/css/manage_incomes.css?v=<%= Time.now.to_i %>">
+
+<div class="main-container">
+    <div class="form-box">
   <h1>Ingresos Pendientes</h1>
 
-    <% if @notice %>
-        <p style="color: green;"><%= @notice %></p>
-    <% end %>
-
     <% if @error %>
-        <p style="color: red;"><%= @error %></p>
-    <% end %>
+        <p class="error"><%= @error %></p>
+      <% end %>
 
-    <% if @movements.empty? %>
-        <p>No hay ingresos pendientes</p>
-    <% else %>
-        <table border="1" cellpadding="5" cellspacing="0">
-        <thead>
-            <tr>
-            <th>ID</th>
-            <th>Monto</th>
-            <th>Fecha</th>
-            <th>Cuenta de Origen</th>
-            <th>Estado</th>
-            <th>Acciones</th>
-            </tr>
-        </thead>
-        <tbody>
-            <% @movements.each do |movement| %>
-            <tr>
-                <td><%= movement.id %></td>
-                <td><%= sprintf('%.2f', movement.amount) %></td>
-                <td><%= movement.date.in_time_zone("Buenos Aires").strftime("%d/%m/%Y %H:%M") %></td>
-                <td><%= movement.origin&.alias || "Sin cuenta" %></td>
-                <td><%= movement.status %></td>
-                <td>
-                    <form action="/manage_incomes/<%= movement.id %>/accept" method="post" style="display:inline;" onsubmit="this.querySelector('button').disabled = true;">
-                        <button type="submit">Aceptar</button>
-                    </form>
-                    <form action="/manage_incomes/<%= movement.id %>/reject" method="post" style="display:inline;">
-                        <button type="submit">Rechazar</button>
-                    </form>
-                </td>
-            </tr>
-            <% end %>
-        </tbody>
-        </table>
-    <% end %>
+      <% if @message %>
+        <p class="message"><%= @message %></p>
+      <% end %>
 
-    <br>
-    <a href="/home">Volver al inicio</a>
-    </body>
-    </html>
+  <% if @movements.empty? %>
+    <p>No hay ingresos pendientes</p>
+  <% else %>
+    <div class="notifications-container">
+      <% @movements.each do |movement| %>
+        <div class="notification-card">
+          <p><strong>ID:</strong> <%= movement.id %></p>
+          <p><strong>Monto:</strong> $<%= sprintf('%.2f', movement.amount) %></p>
+          <p><strong>Fecha:</strong> <%= movement.date.in_time_zone("Buenos Aires").strftime("%d/%m/%Y %H:%M") %></p>
+          <p><strong>Cuenta de Origen:</strong> <%= movement.origin&.alias || "Sin cuenta" %></p>
+          <p><strong>Estado:</strong> <%= movement.status %></p>
+          <div class="actions">
+            <form action="/manage_incomes/<%= movement.id %>/accept" method="post" onsubmit="this.querySelector('button').disabled = true;">
+              <button type="submit" class="accept">Aceptar</button>
+            </form>
+            <form action="/manage_incomes/<%= movement.id %>/reject" method="post">
+              <button type="submit" class="reject">Rechazar</button>
+            </form>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
 
-<!--Esta view asume que @movements es un arreglo con los movimientos de tipo "Ingreso" y estado "Pendiente"-->
+  <br>
+  <a href="/home">Volver al inicio</a>
+
+
