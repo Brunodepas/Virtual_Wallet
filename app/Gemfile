@@ -8,3 +8,8 @@ gem 'sinatra-activerecord'
 gem 'sqlite3', '~> 2.1'
 gem 'rake'
 gem 'pony'
+group :test, :development do
+  gem 'rspec'
+  gem 'rack-test'
+  gem 'database_cleaner-active_record'
+end

@@ -9,7 +9,7 @@ class Saving < ActiveRecord::Base
 
     def reached_goal?
     current_amount >= goal_amount
-  end
+    end
 
 
 end
