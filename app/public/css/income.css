@@ -1,34 +1,31 @@
-body,
-html {
-  margin: 0;
-  padding: 0;
-  font-family: sans-serif;
-  height: 100%;
-}
-
+/* CONTENEDOR DE LA VISTA DENTRO DE main-content */
 .main-container {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 90vh;
+  flex: 1; /* Usa todo el espacio disponible */
+  width: 100%;
   background-color: #d9d9d9;
 }
 
+/* CUADRO DEL FORMULARIO */
 .form-box {
   background-color: white;
-  padding: 120px;
+  padding: 120px 60px;
   border-radius: 20px;
   box-shadow: 0 12px 12px rgba(0, 0, 0, 0.1);
   width: 400px;
   text-align: center;
 }
 
+/* TÍTULO */
 .form-box h1 {
   font-size: 25px;
   margin-bottom: 45px;
   color: #000;
 }
 
+/* CAMPO DE MONTO */
 input[type="number"] {
   background-color: #b9d6f2;
   border: 1px solid #b1c7d8;
@@ -40,6 +37,7 @@ input[type="number"] {
   color: #003f6f;
 }
 
+/* BOTÓN DE ENVÍO */
 button[type="submit"] {
   background-color: #fff59e;
   color: #000;
@@ -56,9 +54,13 @@ button[type="submit"]:hover {
   background-color: #ffe36e;
 }
 
+/* MENSAJES DE VALIDACIÓN */
 .error {
   color: red;
+  margin-bottom: 10px;
 }
+
 .message {
   color: green;
+  margin-bottom: 10px;
 }

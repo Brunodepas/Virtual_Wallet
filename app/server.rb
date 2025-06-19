@@ -128,6 +128,7 @@ end
   get '/income' do
     if current_user
       @message = session.delete(:message)
+      @custom_css = "/css/income.css"
       erb :income
     else
       redirect '/'
@@ -151,9 +152,11 @@ end
       )
       if movement.save
         session[:message] = "Ingreso generado correctamente, espere a ser autorizado"
+        @custom_css = "/css/income.css"
         redirect '/income'
       else
         @error = "Error: no se pudo procesar el ingreso"
+        @custom_css = "/css/income.css"
         erb :income
       end
     else

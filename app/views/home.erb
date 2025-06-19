@@ -30,7 +30,7 @@
         </span><br>
 
         <span style="color: #999; font-size: 0.85em;">
-          <%= m.created_at.strftime("%H:%M hs · %d/%m") %>
+          <%= m.date.in_time_zone("Buenos Aires").strftime("%H:%M hs · %d/%m") %>
         </span>
       </div>
     <% end %>

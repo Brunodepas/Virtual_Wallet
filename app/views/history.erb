@@ -14,7 +14,7 @@
   <tbody>
     <% @movements.each do |m| %>
       <tr>
-        <td style="border: 1px solid black; padding-left: 1cm;"><%= m.date.in_time_zone("Buenos Aires").created_at.strftime("%d/%m/%Y %H:%M") %></td>
+        <td style="border: 1px solid black; padding-left: 1cm;"><%= m.date.in_time_zone("Buenos Aires").strftime("%d/%m/%Y %H:%M") %></td>
         <td style="border: 1px solid black; padding-left: 1cm;"><%= m.movement_type %></td>
         <td style="border: 1px solid black; padding-left: 1cm;"><%= m.reason %></td>
         <td style="border: 1px solid black; padding-left: 1cm;"><%= m.amount %></td>
