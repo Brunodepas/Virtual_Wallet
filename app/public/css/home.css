@@ -1,0 +1,144 @@
+.dashboard {
+    display: flex;
+    height: 100%;
+    width: 100%;
+    gap: 20px;
+    flex-wrap: wrap;
+    background-color: #d9d9d9;
+}
+
+.left-panel, .right-panel {
+    flex: 1;
+    padding: 20px;
+}
+
+/* Panel izquierdo: Descuentos, Promos y Tarjeta */
+.left-panel {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* Descuentos y Promociones */
+.discProms {
+    height: 50%;
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.discProms h2 {
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.discProms ul {
+    list-style: none;
+    padding: 0;
+    margin-bottom: 20px;
+}
+
+.discProms li {
+    margin-bottom: 10px;
+    padding: 8px;
+    background-color: #f0f8ff;
+    border-radius: 5px;
+    font-size: 0.95em;
+}
+
+/* Tarjeta de usuario */
+.accountIngTransf {
+    height: 50%;
+    background-color: #fff9c4;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.account-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.balance {
+    font-size: 1.8em;
+    font-weight: bold;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.account-box p {
+    margin: 5px 0;
+    text-align: center;
+}
+
+.accIT-btn {
+    background-color: #b9d6f2;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    margin-top: 10px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.accIT-btn:hover {
+    background-color: #8abdec;
+}
+
+/* Panel derecho: Historial */
+.right-panel {
+    width: 50%;
+    background-color: #eeeeee;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    display: flex;
+    flex-direction: column;
+}
+
+.right-panel h3 {
+    margin-top: 0;
+    margin-bottom: 15px;
+}
+
+.historial-item {
+    margin-bottom: 15px;
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 10px;
+}
+
+.historial-item span {
+    display: block;
+}
+
+.historial-item .movement-type {
+    color: #666;
+    font-size: 0.9em;
+}
+
+.historial-item .movement-user {
+    font-size: 1em;
+    color: #333;
+}
+
+.historial-item .movement-amount {
+    font-size: 0.95em;
+}
+
+.historial-item .movement-date {
+    color: #999;
+    font-size: 0.85em;
+}
+
+.right-panel a {
+    text-decoration: none;
+    color: #4a148c;
+    font-weight: bold;
+}
+
+.right-panel a:hover {
+    text-decoration: underline;
+}
