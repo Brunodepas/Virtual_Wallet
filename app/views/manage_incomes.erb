@@ -1,36 +1,35 @@
-<link rel="stylesheet" href="/css/layout.css"> <!-- Ya lo usás -->
-<link rel="stylesheet" href="/css/incomesAdm.css?v=<%= Time.now.to_i %>">
+<title>Gestionar Ingresos Pendientes</title>
+<link rel="stylesheet" href="/css/manage_incomes.css?v=<%= Time.now.to_i %>">
 
-<div class="panel">
-    <h3>Ingresos Pendientes</h3>
-
-    <% if @notice %>
-      <p class="notice"><%= @notice %></p>
-    <% end %>
+<div class="main-container">
+  <div class="form-box">
+    <h1>Ingresos Pendientes</h1>
 
     <% if @error %>
       <p class="error"><%= @error %></p>
     <% end %>
 
+    <% if @message %>
+      <p class="message"><%= @message %></p>
+    <% end %>
+
     <% if @movements.empty? %>
-      <p class="empty-msg">No hay ingresos pendientes</p>
+      <p>No hay ingresos pendientes</p>
     <% else %>
-      <div class="movements-list">
+      <div class="notifications-container">
         <% @movements.each do |movement| %>
-          <div class="historial-item">
-            <div>
-              <span class="movement-id">ID: <%= movement.id %></span>
-              <span class="movement-amount">Monto: $<%= sprintf('%.2f', movement.amount) %></span>
-              <span class="movement-date">Fecha: <%= movement.date.in_time_zone("Buenos Aires").strftime("%d/%m/%Y %H:%M") %></span>
-              <span class="movement-user">Cuenta de Origen: <%= movement.origin&.alias || "Sin cuenta" %></span>
-              <span class="movement-type">Estado: <%= movement.status %></span>
-            </div>
-            <div class="movement-actions">
+          <div class="notification-card">
+            <p><strong>ID:</strong> <%= movement.id %></p>
+            <p><strong>Monto:</strong> $<%= sprintf('%.2f', movement.amount) %></p>
+            <p><strong>Fecha:</strong> <%= movement.date.in_time_zone("Buenos Aires").strftime("%d/%m/%Y %H:%M") %></p>
+            <p><strong>Cuenta de Origen:</strong> <%= movement.origin&.alias || "Sin cuenta" %></p>
+            <p><strong>Estado:</strong> <%= movement.status %></p>
+            <div class="actions">
               <form action="/manage_incomes/<%= movement.id %>/accept" method="post" onsubmit="this.querySelector('button').disabled = true;">
-                <button type="submit" class="accept-btn">Aceptar</button>
+                <button type="submit" class="accept">Aceptar</button>
               </form>
               <form action="/manage_incomes/<%= movement.id %>/reject" method="post">
-                <button type="submit" class="reject-btn">Rechazar</button>
+                <button type="submit" class="reject">Rechazar</button>
               </form>
             </div>
           </div>
@@ -38,8 +37,7 @@
       </div>
     <% end %>
 
-    <div class="back-link">
-      <a href="/home">Volver al inicio</a>
-    </div>
+    <br>
+    <a href="/home">Volver al inicio</a>
+  </div>
 </div>
-

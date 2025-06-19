@@ -1,0 +1,80 @@
+body,
+html {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+  height: 100%;
+}
+
+.notifications-container {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  align-items: center;
+}
+
+.notification-card {
+  background-color: white;
+  padding: 15px 20px;
+  border-radius: 10px;
+  width: 100%;
+  max-width: 800px; 
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+
+}
+
+.notification-info {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 20px;
+  flex: 1;
+}
+
+.notification-info p {
+  margin: 0;
+  font-size: 14px;
+  color: #333;
+}
+
+.actions {
+  display: flex;
+  gap: 10px;
+  margin-left: auto;
+}
+
+.actions form {
+  flex: none;
+}
+
+button.accept,
+button.reject {
+  padding: 8px 16px;
+  border-radius: 6px;
+  border: none;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  font-size: 14px;
+}
+
+button.accept {
+  background-color: #c8f7c5;
+  color: #155724;
+}
+
+button.accept:hover {
+  background-color: #a1e89d;
+}
+
+button.reject {
+  background-color: #f8d7da;
+  color: #721c24;
+}
+
+button.reject:hover {
+  background-color: #f1b0b7;
+}
