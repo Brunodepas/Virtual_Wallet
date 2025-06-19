@@ -15,14 +15,18 @@
 
         <nav class="nav-links">
           <a href="/home" class="<%= 'active' if request.path_info == '/home' %>">Home</a>
-          <a href="/income" class="<%= 'active' if request.path_info == '/income' %>">Ingresar Dinero</a>
-          <a href="/transfer" class="<%= 'active' if request.path_info == '/transfer' %>">Transferir Dinero</a>
-          <a href="/my_saving" class="<%= 'active' if request.path_info == '/my_saving' %>">Ver Ahorros</a>
-          <a href="/promos" class="<%= 'active' if request.path_info == '/promos' %>">Ver Promociones</a>
-          <a href="/discounts" class="<%= 'active' if request.path_info == '/discounts' %>">Ver Descuentos</a>
-          <a href="/exchange" class="<%= 'active' if request.path_info == '/exchange' %>">Intercambiar Puntos</a>
+          <% if !(current_user&.admin_check) %>
+            <a href="/income" class="<%= 'active' if request.path_info == '/income' %>">Ingresar Dinero</a>
+            <a href="/transfer" class="<%= 'active' if request.path_info == '/transfer' %>">Transferir Dinero</a>
+            <a href="/my_saving" class="<%= 'active' if request.path_info == '/my_saving' %>">Ver Ahorros</a>
+            <a href="/promos" class="<%= 'active' if request.path_info == '/promos' %>">Ver Promociones</a>
+            <a href="/discounts" class="<%= 'active' if request.path_info == '/discounts' %>">Ver Descuentos</a>
+            <a href="/exchange" class="<%= 'active' if request.path_info == '/exchange' %>">Intercambiar Puntos</a>
+          <% end %>
           <% if current_user&.admin_check %>
             <a href="/manage_incomes" class="<%= 'active' if request.path_info == '/manage_incomes' %>">Gestionar Ingresos Pendientes</a>
+            <a href="/manage_promos" class="<%= 'active' if request.path_info == '/manage_promos' %>">Gestionar Promociones</a>
+            <a href="/manage_discounts" class="<%= 'active' if request.path_info == '/manage_discounts' %>">Gestionar Descuentos</a>
           <% end %>
         </nav>
       </aside>
