@@ -5,10 +5,16 @@
 <head>
 
 <body>
+<% if @error %>
+  <p class="error-message"><%= @error %></p>
+<% elsif @success %>
+  <p class="success-message"><%= @success %></p>
+<% end %>
+
 
 <div class="add-to-saving-wrapper">
     <div class="add-to-saving-header">
-      <h2>Agregar dinero a "<%= @saving.description %>"</h2>
+      <h2>Agregar dinero a tu ahorro</h2>
     </div>
 
     <p>Meta: $<%= @saving.goal_amount %></p>
