@@ -48,9 +48,10 @@ class App < Sinatra::Application
   post '/' do
     username = params[:username]
     password = params[:password]
-    @user = User.find_by(username: username, password: password)
+    @user = User.find_by(username: username)
 
-    if @user
+    #como estamos usando bcrypt tengo que usar un metodo para encontrar la contraseña ya que no se guarda en texto plano
+    if @user && @user.autenthicate(password)
       session[:user_id] = @user.id
       redirect '/home'
     else
