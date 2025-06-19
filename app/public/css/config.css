@@ -1,0 +1,92 @@
+.config-container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 40px;
+  flex: 1;
+  width: 100%;
+  background-color: #d9d9d9;
+  padding: 0 20px;
+  box-sizing: border-box;
+}
+
+.edit-box,
+.delete-box {
+  background-color: white;
+  padding: 40px 30px;
+  border-radius: 20px;
+  box-shadow: 0 12px 12px rgba(0, 0, 0, 0.1);
+  width: 400px;
+}
+
+.edit-box h2,
+.delete-box h2 {
+  font-size: 22px;
+  margin-bottom: 25px;
+  color: #000;
+  text-align: center;
+}
+
+/* Formulario de edición */
+.edit-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.edit-form label {
+  font-weight: bold;
+  text-align: left;
+}
+
+.edit-form input {
+  border: 1px solid #b1c7d8;
+  border-radius: 10px;
+  padding: 10px;
+  font-size: 16px;
+  color: #003f6f;
+}
+
+.edit-form button {
+  background-color: #73a7da;
+  color: #000;
+  border: none;
+  border-radius: 10px;
+  padding: 12px 30px;
+  font-weight: bold;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.edit-form button:hover {
+  background-color: #003f6f;
+}
+
+/* Formulario de eliminación */
+.delete-form {
+  display: flex;
+  justify-content: center;
+}
+
+.delete-form button {
+  background-color: #ffb3b3;
+  color: #000;
+  border: none;
+  border-radius: 10px;
+  padding: 12px 30px;
+  font-weight: bold;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.delete-form button:hover {
+  background-color: #ff8e8e;
+}
+
+.message {
+  color: green;
+  margin-bottom: 15px;
+  text-align: center;
+}

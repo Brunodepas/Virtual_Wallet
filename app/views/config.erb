@@ -1,20 +1,40 @@
-<h2>Editar perfil</h2>
+<div class="config-container">
+  <div class="edit-box">
+    <h2>Editar perfil</h2>
+    <% if @messageEdit %>
+      <p class="message"><%= @messageEdit %></p>
+    <% end %>
 
-<% if @message %>
-  <p style="color: green;"><%= @message %></p>
-<% end %>
 
-<form action="/config" method="post">
-  <label>Teléfono: <input type="tel" name="phone"></label><br>
-  <label>Email: <input type="email" name="email"></label><br>
-  <label>Nombre de Usuario: <input type="text" name="username"></label><br>
-  <label>Contraseña: <input type="password" name="password"></label><br>
-  <label>Alias: <input type="text" name="alias"></label><br>
-  <button type="submit">Enviar</button>
-</form>
+    <form action="/config" method="post" class="edit-form">
+      <label for="phone">Teléfono</label>
+      <input type="tel" name="phone" id="phone">
 
-<h2>Eliminar cuenta</h2>
-<form action="/delete_account" method="post">
-  <button type="submit" onclick="return confirm('¿Estás seguro de que querés eliminar tu cuenta?')">ELIMINAR CUENTA</button>
-</form>
+      <label for="email">Email</label>
+      <input type="email" name="email" id="email">
 
+      <label for="username">Nombre de Usuario</label>
+      <input type="text" name="username" id="username">
+
+      <label for="password">Contraseña</label>
+      <input type="password" name="password" id="password">
+
+      <label for="alias">Alias</label>
+      <input type="text" name="alias" id="alias">
+
+      <button type="submit">Guardar cambios</button>
+    </form>
+  </div>
+
+  <div class="delete-box">
+    <h2>Eliminar cuenta</h2>
+    <% if @messageDelete %>
+      <p class="message"><%= @messageDelete %></p>
+    <% end %>
+    <form action="/delete_account" method="post" class="delete-form">
+      <button type="submit" onclick="return confirm('¿Estás seguro de que querés eliminar tu cuenta?')">
+        ELIMINAR CUENTA
+      </button>
+    </form>
+  </div>
+</div>

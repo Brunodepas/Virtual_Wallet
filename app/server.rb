@@ -583,7 +583,9 @@ post '/my_saving/:id/redeem' do
 
   get '/config' do
     redirect '/' unless logged_in?
-    @message = session.delete(:message)
+    @custom_css = "/css/config.css"
+    @messageEdit = session.delete(:messageEdit)
+    @messageDelete = session.delete(:messageDelete)
     erb :config
   end
 
@@ -609,15 +611,15 @@ post '/my_saving/:id/redeem' do
           account.save!
         end
     
-        session[:message] = "Datos actualizados correctamente"
+        session[:messageEdit] = "Datos actualizados correctamente"
       rescue => e
         logger.error "Error actualizando datos: #{e.message}"
-        session[:message] = "Hubo un error al actualizar los datos."
+        session[:messageEdit] = "Hubo un error al actualizar los datos."
       end
     
       redirect '/config'
     else
-      session[:message] = "No se puede modificar una cuenta Admin"
+      session[:messageEdit] = "No se puede modificar una cuenta Admin"
       redirect '/config'
     end
   end
@@ -634,11 +636,11 @@ post '/my_saving/:id/redeem' do
         erb :login, layout: :header
       rescue => e
         logger.error "Error al eliminar cuenta: #{e.message}"
-        session[:message] = "Error al eliminar la cuenta."
+        session[:messageDelete] = "Error al eliminar la cuenta."
         redirect '/config'
       end
     else
-      session[:message] = "No se puede eliminar una cuenta Admin"
+      session[:messageDelete] = "No se puede eliminar una cuenta Admin"
       redirect '/config'
     end
   end
