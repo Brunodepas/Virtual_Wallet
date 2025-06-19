@@ -1,0 +1,145 @@
+body,
+html {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+  height: 100%;
+  background: #f0f4ff; /* ligero fondo para dar contraste */
+}
+
+/* Wrapper general */
+.transferencias-wrapper {
+  max-width: 800px;
+  margin: 40px auto;
+  background-color: white;
+  border-radius: 12px;
+  padding: 30px 40px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.3s ease;
+}
+
+.transferencias-wrapper:hover {
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.15);
+}
+
+/* Header de la transferencia */
+.transferencias-header {
+  margin-bottom: 30px;
+}
+
+.transferencias-header h2 {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #4a90e2;
+  margin-bottom: 1rem;
+  letter-spacing: -0.03em;
+  text-shadow: 0 1px 2px rgba(74, 144, 226, 0.3);
+  transition: color 0.3s ease;
+}
+
+.transferencias-header h2:hover {
+  color: #357ABD;
+}
+
+/* Formulario */
+form {
+  margin-top: 2rem;
+}
+
+form > div {
+  margin-bottom: 1.5rem;
+}
+
+label {
+  display: block;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  user-select: none;
+  transition: color 0.3s ease;
+}
+
+input[type="text"],
+input[type="number"] {
+  width: 100%;
+  padding: 1rem;
+  border: none;
+  border-bottom: 2px solid #D9D9D9;
+  background: transparent;
+  font-size: 1.1rem;
+  color: #222;
+  font-weight: 500;
+  outline: none;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  border-radius: 4px 4px 0 0;
+  box-shadow: inset 0 -1px 0 #D9D9D9;
+}
+
+input[type="text"]:focus,
+input[type="number"]:focus {
+  border-bottom-color: #4a90e2;
+  box-shadow: 0 2px 10px rgba(74, 144, 226, 0.25);
+  background: #f5faff;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+}
+
+input[type="text"]::placeholder,
+input[type="number"]::placeholder {
+  color: #6b8cc1;
+  font-weight: 400;
+  font-style: italic;
+  transition: color 0.3s ease;
+}
+
+input[type="text"]:focus::placeholder,
+input[type="number"]:focus::placeholder {
+  color: #a0b9e7;
+}
+
+input[name="amount"] {
+  color: #007a00;
+  font-weight: 700;
+  font-size: 1.3rem;
+}
+
+/* Botón */
+button[type="submit"] {
+  width: 100%;
+  padding: 1rem 1.5rem;
+  border: none;
+  border-radius: 0.9rem;
+  font-size: 1.1rem;
+  font-weight: 700;
+  cursor: pointer;
+  background: linear-gradient(135deg, #5B3EFF, #9C7BFF);
+  color: #fff;
+  box-shadow: 0 4px 12px rgba(91, 62, 255, 0.6);
+  transition: background 0.4s ease, box-shadow 0.4s ease, transform 0.15s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  user-select: none;
+}
+
+button[type="submit"]:hover {
+  background: linear-gradient(135deg, #472bff, #6d53ff);
+  box-shadow: 0 6px 18px rgba(71, 43, 255, 0.8);
+  transform: translateY(-2px);
+}
+
+button[type="submit"]:active {
+  transform: translateY(1px);
+  box-shadow: 0 2px 8px rgba(71, 43, 255, 0.6);
+}
+
+button[type="submit"]:focus {
+  outline: 3px solid #8578ff;
+  outline-offset: 3px;
+}
+
+/* Ocultar input hidden */
+input[type="hidden"] {
+  display: none;
+}
