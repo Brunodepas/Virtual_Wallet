@@ -4,7 +4,7 @@ html {
   padding: 0;
   font-family: sans-serif;
   height: 100%;
-  background: #f0f4ff; /* ligero fondo para dar contraste */
+  background: #f0f4ff; 
 }
 
 /* Wrapper general */
@@ -31,10 +31,12 @@ html {
   font-size: 2rem;
   font-weight: 700;
   color: #4a90e2;
+  text-align: center;
   margin-bottom: 1rem;
   letter-spacing: -0.03em;
   text-shadow: 0 1px 2px rgba(74, 144, 226, 0.3);
   transition: color 0.3s ease;
+  padding: 1rem;
 }
 
 .transferencias-header h2:hover {
@@ -143,3 +145,17 @@ button[type="submit"]:focus {
 input[type="hidden"] {
   display: none;
 }
+
+.alert {
+  padding: 1rem 1.5rem;
+  margin: 1rem 0;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 1.1rem;
+  border-left: 6px solid;
+  background-color: #fafafa;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  animation: fadeIn 0.4s ease-out;
+  text-align: center;
+}
+
