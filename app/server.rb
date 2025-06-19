@@ -620,7 +620,9 @@ post '/my_saving/:id/redeem' do
 
   get '/config' do
     redirect '/' unless logged_in?
-    @message = session.delete(:message)
+    @messageDelete = session.delete(:messageDelete)
+    @messageEdit = session.delete(:messageEdit)
+    @custom_css = "/css/config.css"
     erb :config
   end
 
@@ -631,33 +633,35 @@ post '/my_saving/:id/redeem' do
     if user.admin_check == false
       person = user.person
       account = user.accounts.first
-    
+  
       begin
         ActiveRecord::Base.transaction do
-          # Solo actualizamos si el parámetro está presente y no vacío
+          # Solo actualizar si hay un valor nuevo
           person.phone = params[:phone] unless params[:phone].to_s.strip.empty?
           person.email = params[:email] unless params[:email].to_s.strip.empty?
           user.username = params[:username] unless params[:username].to_s.strip.empty?
-          user.password = params[:password] unless params[:password].to_s.strip.empty?
+          unless params[:password].to_s.strip.empty?
+            user.password = params[:password]
+          end
           account.alias = params[:alias] unless params[:alias].to_s.strip.empty?
-    
+  
           person.save!
           user.save!
           account.save!
         end
-    
-        session[:message] = "Datos actualizados correctamente"
+  
+        session[:messageEdit] = "Datos actualizados correctamente"
       rescue => e
         logger.error "Error actualizando datos: #{e.message}"
-        session[:message] = "Hubo un error al actualizar los datos."
+        session[:messageEdit] = "Hubo un error al actualizar los datos."
       end
-    
+  
       redirect '/config'
     else
-      session[:message] = "No se puede modificar una cuenta Admin"
+      session[:messageEdit] = "No se puede modificar una cuenta Admin"
       redirect '/config'
     end
-  end
+  end  
   
   post '/delete_account' do
     redirect '/' unless logged_in?
@@ -668,14 +672,15 @@ post '/my_saving/:id/redeem' do
         user.destroy
         session.clear
         @message = "Cuenta eliminada con exito"
+        @custom_css = "/css/login.css"
         erb :login, layout: :header
       rescue => e
         logger.error "Error al eliminar cuenta: #{e.message}"
-        session[:message] = "Error al eliminar la cuenta."
+        session[:messageDelete] = "Error al eliminar la cuenta."
         redirect '/config'
       end
     else
-      session[:message] = "No se puede eliminar una cuenta Admin"
+      session[:messageDelete] = "No se puede eliminar una cuenta Admin"
       redirect '/config'
     end
   end

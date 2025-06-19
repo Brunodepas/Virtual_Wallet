@@ -7,5 +7,5 @@ class User < ActiveRecord::Base
 
   #Validaciones
   validates :username, presence: true, uniqueness: true
-  validates :password, presence: true
+  validates :password, presence: true, on: :create
 end

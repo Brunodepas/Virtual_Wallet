@@ -5,7 +5,7 @@ Wink is a project for the systems analysis and design (2025) course of the third
 
 ## Team Members
 
-- [Bruno de pasquale](https://www.github.com/brunodepas)
+- [Bruno De Pasquale](https://www.github.com/brunodepas)
 - [Emiliano Bernal](https://github.com/EmiBernal)
 - [Genaro Oviedo](https://github.com/Genaro-Oviedo)
 - [Juliana Sarmiento](https://github.com/julisarmiento)
