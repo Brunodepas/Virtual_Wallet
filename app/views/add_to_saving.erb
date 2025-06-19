@@ -1,9 +1,15 @@
 <head>
-    <title>addtosaving</title>
+    <title>addtosaving</title>    
+    <link rel="stylesheet" href="/css/add_to_saving.css">
+
 <head>
 
 <body>
-    <h1>Agregar dinero a "<%= @saving.description %>"</h1>
+
+<div class="add-to-saving-wrapper">
+    <div class="add-to-saving-header">
+      <h2>Agregar dinero a "<%= @saving.description %>"</h2>
+    </div>
 
     <p>Meta: $<%= @saving.goal_amount %></p>
     <p>Actual: $<%= @saving.current_amount %></p>

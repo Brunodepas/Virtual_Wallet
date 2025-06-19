@@ -24,6 +24,11 @@
           <div class="saving-info">
             <strong><%= saving.description %></strong><br>
             <strong>En el cofre: $<%= saving.current_amount %> =>=>=> meta: $<%= saving.goal_amount %></strong>
+          
+          <% if saving.current_amount >= saving.goal_amount %>
+          <p class="goal-reached-message">Meta alcanzada!</p>
+          <% end %>
+
           </div>
 
           <div class="saving-action">
