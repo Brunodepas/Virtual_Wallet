@@ -1,18 +1,24 @@
 <head>
-    <title>Ingreso</title>
-<head>
+  <title>Ingreso</title>
+  <link rel="stylesheet" href="/css/income.css?v=<%= Time.now.to_i %>">
+</head>
 <body>
-    <h1>Indique la cantidad de dinero a ingresar</h1>
-    <% if @error %>
-        <p style="color: red;"><%= @error %></p>
-    <% end %>
-    <% if @message %>
-        <p style="color: green;"><%= @message %></p>
-    <% end %>
-    <form action="/income" method="post">
-        <input type= "number" name="amount" required>
-        <br>
-        <br>
-        <button type = "submit"> Ingresar </button>
-    </form>
-<body>
+  <div class="main-container">
+    <div class="form-box">
+      <h1>Indique la cantidad de dinero a ingresar</h1>
+
+      <% if @error %>
+        <p class="error"><%= @error %></p>
+      <% end %>
+
+      <% if @message %>
+        <p class="message"><%= @message %></p>
+      <% end %>
+
+      <form action="/income" method="post">
+        <input type="number" name="amount">
+        <button type="submit">Ingresar</button>
+      </form>
+    </div>
+  </div>
+</body>
