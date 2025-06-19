@@ -1,0 +1,75 @@
+body,
+html {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+  height: 100%;
+}
+
+.savings-wrapper {
+  max-width: 800px;
+  margin: 40px auto;
+  background-color: white;
+  border-radius: 10px;
+  padding: 20px 30px;
+}
+
+.savings-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+}
+
+.savings-header h2 {
+  margin: 0;
+}
+
+.normal-button {
+  padding: 8px 16px;
+  background-color: #b9d6f2;
+  color: black;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.normal-button:hover {
+  background-color: #73a7da;
+}
+
+.saving-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #73a7da;
+  padding: 15px 20px;
+  border-radius: 8px;
+  margin-bottom: 15px;
+}
+
+.saving-info {
+  font-size: 23px;
+}
+
+.chest-icon {
+  width: 140px;
+  height: 140px;
+  margin-left: 20px;
+  
+}
+
+.no-savings {
+  text-align: center;
+  color: #666;
+  font-size: 17px;
+}
+
+.centered {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px; 
+}
+
+
