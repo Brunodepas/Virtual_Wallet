@@ -1,42 +1,81 @@
-<h2>Saldo: <%= current_user.accounts.first.balance %> </h2>
-<h2>Puntos: <%= current_user.accounts.first.amount_point %> </h2>
+<link rel="stylesheet" href="/css/layout.css?v=<%= Time.now.to_i %>">
+<link rel="stylesheet" href="/css/header.css?v=<%= Time.now.to_i %>">
+<link rel="stylesheet" href="/css/home.css?v=<%= Time.now.to_i %>">
 
-<div style="position: absolute; top: 120px; right: 20px; width: 300px; background: #eee; padding: 15px; border-radius: 8px;">
-  <h3 style="margin-top: 0;">Historial</h3>
+<div class="dashboard">
 
-  <% if @movements.any? %>
-    <% @movements.each do |m| %>
-      <% name = if m.user == current_user
-        m.destination&.user&.person
-      else
-        m.origin&.user&.person
-      end %>
-
-      <div style="margin-bottom: 15px; border-bottom: 1px solid #ccc; padding-bottom: 10px;">
-        <span style="color: #666; font-size: 0.9em;">
-          <% if m.movement_type == "Ingreso" %>
-            Ingreso de dinero
-          <% else %>
-            <%= m.user == current_user ? "Transferencia enviada a" : "Transferencia recibida de" %>
+  <div class="left-panel">
+      <section class="discProms">
+        <h2> Descuentos activos </h2>
+        <ul>
+          <% @account_discounts.each do |discount| %>
+            <li><%= discount.description %> - <%= discount.percentage %></li>
           <% end %>
-        </span><br>
+        </ul>
 
-        <span style="font-size: 1em; color: #333;">
-          <%= "#{name&.first_name} #{name&.last_name}".strip.presence%>
-        </span><br>
+        <h2> Promociones activas </h2>
+        <ul>
+          <% @account_promos.each do |promo| %>
+            <li><%= promo.description %> - Hasta: <%= promo.end_date %></li>
+          <% end %>
+        </ul>
+      </section>
 
-        <span style="color: <%= m.user == current_user ? 'red' : 'green' %>; font-size: 0.95em;">
-          <%= m.user == current_user ? "-" : "+" %>$<%= sprintf('%.2f', m.amount) %>
-        </span><br>
+      <section class="accountIngTransf">
+        <div class="account-box">
+          <p class="balance">Tu dinero<br>$<%= current_user.accounts.first.balance %></p>
+          <p>Alias: <%= current_user.accounts.first.alias %></p>
+          <p>CVU: <%= current_user.accounts.first.cvu %></p>
+          <p>Puntos: <%= current_user.accounts.first.amount_point %> </p>
 
-        <span style="color: #999; font-size: 0.85em;">
-          <%= m.date.in_time_zone("Buenos Aires").strftime("%H:%M hs · %d/%m") %>
-        </span>
-      </div>
+          <form action="/income" method="get">
+            <button class="accIT-btn" type="submit">Ingresar Dinero</button>
+          </form>
+
+          <form action="/transfer" method="get">
+            <button class="accIT-btn" type="submit">Transferir Dinero</button>
+          </form>
+        </div>
+      </section>
+  </div>
+
+  <div class="right-panel">
+    <h3>Historial</h3>
+    <% if @movements.any? %>
+      <% @movements.each do |m| %>
+        <% name = if m.user == current_user
+            m.destination&.user&.person
+          else
+            m.origin&.user&.person
+          end %>
+
+        <div class="historial-item">
+          <span class="movement-type">
+            <% if m.movement_type == "Ingreso" %>
+              Ingreso de dinero
+            <% else %>
+              <%= m.user == current_user ? "Transferencia enviada a" : "Transferencia recibida de" %>
+            <% end %>
+          </span>
+
+          <span class="movement-user">
+            <%= "#{name&.first_name} #{name&.last_name}".strip.presence %>
+          </span>
+
+          <span class="movement-amount" style="color: <%= m.user == current_user ? 'red' : 'green' %>;">
+            <%= m.user == current_user ? "-" : "+" %>$<%= sprintf('%.2f', m.amount) %>
+          </span>
+
+          <span class="movement-date">
+            <%= m.date.in_time_zone("Buenos Aires").strftime("%H:%M hs · %d/%m") %>
+          </span>
+        </div>
+      <% end %>
+    <% else %>
+      <p>No hay movimientos recientes para mostrar.</p>
     <% end %>
-  <% else %>
-    <p>No hay movimientos recientes para mostrar.</p>
-  <% end %>
 
-  <a href="/history">Ver más</a>
+    <a href="/history">Ver más</a>
+  </div>
+
 </div>

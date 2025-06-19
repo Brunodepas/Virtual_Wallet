@@ -1,33 +1,41 @@
-<h2>Historial de Movimientos</h2>
+<link rel="stylesheet" href="/css/layout.css?v=<%= Time.now.to_i %>">
+<link rel="stylesheet" href="/css/header.css?v=<%= Time.now.to_i %>">
+<link rel="stylesheet" href="/css/home.css?v=<%= Time.now.to_i %>">
 
-<table style="border-collapse: collapse;">
-  <thead>
-    <tr>
-      <th style="border: 1px solid black; padding-left: 1cm;">Fecha</th>
-      <th style="border: 1px solid black; padding-left: 1cm;">Tipo</th>
-      <th style="border: 1px solid black; padding-left: 1cm;">Motivo</th>
-      <th style="border: 1px solid black; padding-left: 1cm;">Monto</th>
-      <th style="border: 1px solid black; padding-left: 1cm;">Origen</th>
-      <th style="border: 1px solid black; padding-left: 1cm;">Destino</th>
-    </tr>
-  </thead>
-  <tbody>
+<h3>Historial de movimientos</h3>
+
+<div class='panel'>
+  <% if @movements.any? %>
     <% @movements.each do |m| %>
-      <tr>
-        <td style="border: 1px solid black; padding-left: 1cm;"><%= m.date.in_time_zone("Buenos Aires").strftime("%d/%m/%Y %H:%M") %></td>
-        <td style="border: 1px solid black; padding-left: 1cm;"><%= m.movement_type %></td>
-        <td style="border: 1px solid black; padding-left: 1cm;"><%= m.reason %></td>
-        <td style="border: 1px solid black; padding-left: 1cm;"><%= m.amount %></td>
-        <td style="border: 1px solid black; padding-left: 1cm;">
-          <%= "#{m.origin&.user&.person&.first_name} #{m.origin&.user&.person&.last_name}".strip.presence || "Nulo" %>
-        </td>
-        <td style="border: 1px solid black; padding-left: 1cm;">
-          <% if m.destination.present? && m.destination.user&.person.present? %>
-          <%= "#{m.destination.user.person.first_name} #{m.destination.user.person.last_name}".strip %>
+      <% name = if m.user == current_user
+          m.destination&.user&.person
+        else
+          m.origin&.user&.person
+        end %>
+
+      <div class="historial-item">
+        <span class="movement-type">
+          <% if m.movement_type == "Ingreso" %>
+            Ingreso de dinero
           <% else %>
+            <%= m.user == current_user ? "Transferencia enviada a" : "Transferencia recibida de" %>
           <% end %>
-        </td>
-      </tr>
+        </span>
+
+        <span class="movement-user">
+          <%= "#{name&.first_name} #{name&.last_name}".strip.presence %>
+        </span>
+
+        <span class="movement-amount" style="color: <%= m.user == current_user ? 'red' : 'green' %>;">
+          <%= m.user == current_user ? "-" : "+" %>$<%= sprintf('%.2f', m.amount) %>
+        </span>
+
+        <span class="movement-date">
+          <%= m.date.in_time_zone("Buenos Aires").strftime("%H:%M hs · %d/%m") %>
+        </span>
+      </div>
     <% end %>
-  </tbody>
-</table>
+  <% else %>
+    <p>No hay movimientos para mostrar.</p>
+  <% end %>
+</div>

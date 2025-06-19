@@ -67,7 +67,9 @@ class App < Sinatra::Application
       .where("origin_id = :id OR destination_id = :id", id: @account.id)
       .where(status: ['Pendiente', 'Exitosa'])
       .order(created_at: :desc)
-      .limit(5) 
+      .limit(8)
+    @account_discounts = @account.discounts 
+    @account_promos = @account.promos 
     erb :home
   else
     redirect '/'
@@ -520,7 +522,7 @@ post '/my_saving/:id/redeem' do
     account = current_user.accounts.first
   
     if account.promos.include?(promo)
-      session[:message] = "Ya compraste esta promo."
+      session[:message] = promo.description + " - Ya compraste esta promo."
     elsif account.amount_point < promo.cost
       session[:message] = "No tenés suficientes puntos."
     else
@@ -529,6 +531,20 @@ post '/my_saving/:id/redeem' do
       account.update(amount_point: account.amount_point - promo.cost)
       session[:message] = "Promo comprada exitosamente."
     end
+    redirect '/promos'
+  end
+
+  post '/promos/:id/usar' do
+    promo = Promo.find(params[:id])
+    account = current_user.accounts.first
+  
+    if account.promos.include?(promo)
+      account.promos.destroy(promo)
+      session[:message] = "Promoción usada con éxito."
+    else
+      session[:message] = "No tenés esta promoción."
+    end
+  
     redirect '/promos'
   end
 
@@ -546,7 +562,7 @@ post '/my_saving/:id/redeem' do
     account = current_user.accounts.first
   
     if account.discounts.include?(discount)
-      session[:message] = "Ya compraste este descuento."
+      session[:message] = discount.description + "Ya compraste este descuento."
     elsif account.amount_point < discount.cost
       session[:message] = "No tenés suficientes puntos."
     else
@@ -558,6 +574,19 @@ post '/my_saving/:id/redeem' do
     redirect '/discounts'
   end
   
+  post '/discounts/:id/usar' do
+    discount = Discount.find(params[:id])
+    account = current_user.accounts.first
+  
+    if account.discounts.include?(discount)
+      account.discounts.destroy(discount)
+      session[:message] = "Descuento usado con éxito."
+    else
+      session[:message] = "No tenés este descuento."
+    end
+  
+    redirect '/discounts'
+  end
 
   get '/exchange' do
     if current_user
@@ -590,9 +619,7 @@ post '/my_saving/:id/redeem' do
 
   get '/config' do
     redirect '/' unless logged_in?
-    @custom_css = "/css/config.css"
-    @messageEdit = session.delete(:messageEdit)
-    @messageDelete = session.delete(:messageDelete)
+    @message = session.delete(:message)
     erb :config
   end
 
@@ -618,15 +645,15 @@ post '/my_saving/:id/redeem' do
           account.save!
         end
     
-        session[:messageEdit] = "Datos actualizados correctamente"
+        session[:message] = "Datos actualizados correctamente"
       rescue => e
         logger.error "Error actualizando datos: #{e.message}"
-        session[:messageEdit] = "Hubo un error al actualizar los datos."
+        session[:message] = "Hubo un error al actualizar los datos."
       end
     
       redirect '/config'
     else
-      session[:messageEdit] = "No se puede modificar una cuenta Admin"
+      session[:message] = "No se puede modificar una cuenta Admin"
       redirect '/config'
     end
   end
@@ -643,11 +670,11 @@ post '/my_saving/:id/redeem' do
         erb :login, layout: :header
       rescue => e
         logger.error "Error al eliminar cuenta: #{e.message}"
-        session[:messageDelete] = "Error al eliminar la cuenta."
+        session[:message] = "Error al eliminar la cuenta."
         redirect '/config'
       end
     else
-      session[:messageDelete] = "No se puede eliminar una cuenta Admin"
+      session[:message] = "No se puede eliminar una cuenta Admin"
       redirect '/config'
     end
   end

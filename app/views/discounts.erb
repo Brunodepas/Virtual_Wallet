@@ -1,40 +1,55 @@
-<h2>Descuentos disponibles</h2>
+<link rel="stylesheet" href="/css/layout.css?v=<%= Time.now.to_i %>">
+<link rel="stylesheet" href="/css/header.css?v=<%= Time.now.to_i %>">
+<link rel="stylesheet" href="/css/benefits.css?v=<%= Time.now.to_i %>">
 
-<% if @message %>
-  <div><%= @message %></div>
-<% end %>
+<div class="benefit-section">
 
+  <!-- Parte superior: Descuentos disponibles -->
+  <div class="benefit-area">
+    <h2>Descuentos disponibles</h2>
 
-<% if @available_discounts.any? %>
-  <% @available_discounts.each do |discount| %>
-    <div class="discount-card">
-      <p><strong><%= discount.description %></strong></p>
-      <p>Costo: <%= discount.cost %> pts</p>
-      <p>Porcentaje: <%= discount.percentage %></p>
-      <form action="/discounts/<%= discount.id %>/comprar" method="post">
-        <button <%= 'disabled' if current_user.accounts.first.amount_point < discount.cost %>>
-          Comprar
-        </button>
-      </form>
-    </div>
-  <% end %>
-<% else %>
-  <p>No hay nuevos descuentos disponibles.</p>
-<% end %>
+    <% if @message %>
+      <div><%= @message %></div>
+    <% end %>
 
-<hr>
+    <% if @available_discounts.any? %>
+      <div class="benefit-container">
+        <% @available_discounts.each do |discount| %>
+          <div class="benefit-card">
+            <p><strong><%= discount.description %></strong></p>
+            <p>Costo: <%= discount.cost %> pts</p>
+            <p>Porcentaje: <%= discount.percentage %></p>
+            <form action="/discounts/<%= discount.id %>/comprar" method="post">
+              <button <%= 'disabled' if current_user.accounts.first.amount_point < discount.cost %>> Comprar </button>
+            </form>
+          </div>
+        <% end %>
+      </div>
+    <% else %>
+      <p>No hay nuevos descuentos disponibles.</p>
+    <% end %>
+  </div>
 
-<h2>Descuentos comprados</h2>
+  <!-- Parte inferior: Descuentos reclamados -->
+  <div class="benefit-area">
+    <h2>Descuentos reclamados</h2>
 
-<% if @purchased_discounts.any? %>
-  <% @purchased_discounts.each do |discount| %>
-    <div class="discount-card">
-      <p><strong><%= discount.description %></strong></p>
-      <p>Costo: <%= discount.cost %> pts</p>
-      <p>Porcentaje: <%= discount.percentage %></p>
-      <p><em>Ya comprado</em></p>
-    </div>
-  <% end %>
-<% else %>
-  <p>Todavía no compraste ningun descuento.</p>
-<% end %>
+    <% if @purchased_discounts.any? %>
+      <div class="benefit-container">
+        <% @purchased_discounts.each do |discount| %>
+          <div class="benefit-card">
+            <p><strong><%= discount.description %></strong></p>
+            <p>Costo: <%= discount.cost %> pts</p>
+            <p>Porcentaje: <%= discount.percentage %></p>
+            <p></p>
+            <form action="/discounts/<%= discount.id %>/comprar" method="post">
+              <button <%= 'disabled' if current_user.accounts.first.amount_point < discount.cost %>> Usar </button>
+            </form>
+          </div>
+        <% end %>
+      </div>
+    <% else %>
+      <p>Todavía no compraste ningún descuento.</p>
+    <% end %>
+  </div>
+</div>
