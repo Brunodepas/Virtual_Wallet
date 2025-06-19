@@ -1,0 +1,161 @@
+html, body {
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+    height: 100%;
+    overflow: hidden; /* Desactiva scroll en body */
+}
+
+/* Contenedor principal, estilo tipo panel */
+.panel {
+    position: relative;              /* Evita pequeños desbordes por márgenes o sombras */
+    height: calc(100vh - 80px);      /* Ocupará todo menos el header */
+    width: 100%;
+    max-width: 900px;
+    margin: 0 auto;                  /* Centrado horizontal */
+    background-color: #eeeeee;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    box-sizing: border-box;
+    padding: 20px;
+    overflow-y: auto;                /* Scroll SOLO dentro del panel si hace falta */
+    overflow-x: hidden;              /* Por si acaso, para evitar scroll lateral */
+}
+
+/* Titulos generales */
+h1, h2 {
+    color: #333;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* Sección listados */
+.benefit-list ul {
+    list-style: none;
+    padding: 0;
+    margin: 0 auto 30px auto;
+    max-width: 600px;
+}
+
+.benefit-list li {
+    background-color: #fff9c4; /* amarillo claro, acorde a .historial-item */
+    border-radius: 8px;
+    padding: 15px 20px;
+    margin-bottom: 12px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: 600;
+    color: #333;
+}
+
+.benefit-list li form {
+    margin: 0;
+}
+
+/* Botón eliminar */
+.benefit-list button {
+    background-color: #f44336;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    font-weight: bold;
+    padding: 6px 12px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.benefit-list button:hover {
+    background-color: #d32f2f;
+}
+
+/* Formulario crear promoción */
+.new-benefit-form {
+    background-color: #fff;
+    border-radius: 10px;
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.new-benefit-form label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: 600;
+    color: #444;
+}
+
+.new-benefit-form input[type="text"],
+.new-benefit-form input[type="date"] {
+    width: 100%;
+    padding: 8px 10px;
+    margin-bottom: 18px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 1rem;
+    box-sizing: border-box;
+    transition: border-color 0.2s ease;
+}
+
+.new-benefit-form input[type="text"]:focus,
+.new-benefit-form input[type="date"]:focus {
+    border-color: #4a148c;
+    outline: none;
+}
+
+/* Botón crear promoción */
+.new-benefit-form button[type="submit"] {
+    background-color: green;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 10px 20px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: 100%;
+    font-size: 1.1rem;
+}
+
+.new-benefit-form button[type="submit"]:hover {
+    background-color: #6a23b8;
+}
+
+/* Mensajes (notice, error) - si los usás */
+.notice {
+    color: green;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.error {
+    color: red;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+/* Mensaje cuando no hay promos */
+.benefit-list p {
+    text-align: center;
+    color: #555;
+    font-style: italic;
+}
+
+/* Responsive simple */
+@media (max-width: 600px) {
+    .benefit-list li {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+    
+    .benefit-list button {
+        width: 100%;
+    }
+    
+    .new-benefit-form button[type="submit"] {
+        font-size: 1rem;
+    }
+}
