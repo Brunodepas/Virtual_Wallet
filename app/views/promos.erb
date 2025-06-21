@@ -42,7 +42,7 @@
             <p>Costo: <%= promo.cost %> pts</p>
             <p>Vencimiento: <%= promo.end_date %></p>
             <p></p>
-            <form action="/promos/<%= promo.id %>/comprar" method="post">
+            <form action="/promos/<%= promo.id %>/usar" method="post">
               <button <%= 'disabled' if current_user.accounts.first.amount_point < promo.cost %>> Usar </button>
             </form>
           </div>

@@ -1,6 +1,6 @@
 class Promo < ActiveRecord::Base
   #Relationships
-  has_many :AccountsPromo
+  has_many :AccountsPromo, dependent: :destroy
   has_many :accounts, through: :AccountsPromo
 
   #Validations

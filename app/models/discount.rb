@@ -1,6 +1,6 @@
 class Discount < ActiveRecord::Base
   #Relationships
-  has_many :AccountsDiscount
+  has_many :AccountsDiscount, dependent: :destroy
   has_many :accounts, through: :AccountsDiscount
 
   #Validations

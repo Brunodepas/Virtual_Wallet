@@ -42,7 +42,7 @@
             <p>Costo: <%= discount.cost %> pts</p>
             <p>Porcentaje: <%= discount.percentage %></p>
             <p></p>
-            <form action="/discounts/<%= discount.id %>/comprar" method="post">
+            <form action="/discounts/<%= discount.id %>/usar" method="post">
               <button <%= 'disabled' if current_user.accounts.first.amount_point < discount.cost %>> Usar </button>
             </form>
           </div>
